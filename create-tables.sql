@@ -1,7 +1,8 @@
 create table branch (
-  LOCATION VARCHAR(40),
+  LOCATION_ID VARCHAR(40),
   CITY VARCHAR(40),
-  PRIMARY KEY (LOCATION, CITY));
+  PRIMARY KEY (LOCATION_ID, CITY)
+  );
   
 create table VehicleType (
   VTNAME VARCHAR(40),
@@ -16,48 +17,48 @@ create table VehicleType (
   PRIMARY KEY (VTNAME));
   
 create table Vehicle(
-  VID NUMBER(13), #not sure how many digits i need to keep for this
-  VLICENSE NUMBER(13), #not sure how many digits i need to keep for this
+  VID NUMBER(13),
+  VLICENSE NUMBER(13), 
   MAKE VARCHAR(40),
   MODEL VARCHAR(40),
   YEAR NUMBER(13),
   COLOR VARCHAR(40),
   ODOMETER numeric(10,2),
-  STATUS VARCHAR(40),
+  STATUS_ID VARCHAR(40),
   VTNAME VARCHAR(40),
-  LOCATION VARCHAR(40),
+  LOCATION_ID VARCHAR(40),
   CITY VARCHAR(40),
   PRIMARY KEY (VID),
   FOREIGN KEY (VTNAME) REFERENCES VehicleType,
-  FOREIGN KEY (LOCATION, CITY) REFERENCES branch
+  FOREIGN KEY (LOCATION_ID, CITY) REFERENCES branch
   );
 
 create table Equipment(
-  EID NUMBER(13), #not sure how many digits i need to keep for this
+  EID NUMBER(13),
   ETNAME VARCHAR(40),
   VTNAME VARCHAR(40),
-  STATUS VARCHAR(40),
-  LOCATION VARCHAR(40),
+  STATUS_ID VARCHAR(40),
+  LOCATION_ID VARCHAR(40),
   CITY VARCHAR(40),
   DRATE numeric(10,2),
   HRATE numeric(10,2),
   PRIMARY KEY (EID),
   FOREIGN KEY (VTNAME) REFERENCES Vehicle,
-  FOREIGN KEY (LOCATION, CITY) REFERENCES branch
+  FOREIGN KEY (LOCATION_ID, CITY) REFERENCES branch
   );
   
 create table Customer(
-  DLICENSE NUMBER(13), #not sure how many digits i need to keep for this
+  DLICENSE NUMBER(13), 
   CELLPHONE NUMBER(13),
-  NAME VARCHAR(40),
-  ADDRESS VARCHAR(40),
+  NAME_ID VARCHAR(40),
+  ADDRESS_ID VARCHAR(40),
   POINTS NUMBER(13)
   FEES numeric(10,2),
   PRIMARY KEY (DLICENSE)
   );
   
 create table Reservations(
-  CONFNO NUMBER(13), #not sure how many digits i need to keep for this
+  CONFNO NUMBER(13), 
   VTNAME VARCHAR(40),
   DLICENSE VARCHAR(40),
   FROMDATE date,
@@ -73,7 +74,7 @@ create table Reservations(
   );
   
 create table Rentals(
-  RID NUMBER(13), #not sure how many digits i need to keep for this
+  RID NUMBER(13), 
   VID NUMBER(13),
   EID NUMBER(13),
   DLICENSE VARCHAR(40),
@@ -93,12 +94,12 @@ create table Rentals(
   );
   
 create table Returns(
-  RID NUMBER(13), #not sure how many digits i need to keep for this
-  DATE date,
-  TIME TIME [ ( p ) ],
+  RID NUMBER(13),
+  DATE_ID date,
+  TIME_ID TIME [ ( p ) ],
   ODOMETER numeric(10,2),
   FULLTANK VARCHAR(40),
-  VALUE NUMBER(13),
+  VALUE_ID NUMBER(13),
   FOREIGN KEY (RID) REFERENCES Rentals
   );  
 
