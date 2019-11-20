@@ -1,5 +1,6 @@
 <?php
-// require_once("");
+// ? you can comment it out to try
+require_once("database.php");
 if (isset($_POST["submit"])){
     if (empty($_POST["cellphone_number"])
     || empty($_POST["name"])
@@ -12,9 +13,20 @@ if (isset($_POST["submit"])){
         $dlicense = $_POST["dlicense"];
         $address = $_POST["address"];
         $query = "INSERT INTO Customer (cellphone, name, address, dlicense) 
-                Values (:cellphone, :name, :address, :dlicense)";
+                Values ($cellphone, $name, $dlicense, $address)";
         
+        mysqli_query($conn, $query);
+        if (mysql_affected_rows == 1) {
+            echo "We have added you, let's start to make reservation !";
+            mysql_close($conn);
+        } else {
+            echo "insertion fail";
+            echo mysql_error;
+            mysql_close($conn);
+        }
     }
+    // we can go back to the reservation page through this statement
+    // header("Location: ...");
 }
 ?>
 
@@ -48,7 +60,7 @@ if (isset($_POST["submit"])){
 
 
 <p>
-<input type = "submit" name = "submit" value = "Send" />
+<input type = "submit" name = "submit" value = "Add" />
 </p>
 
 </form>
