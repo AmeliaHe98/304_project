@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2019 at 08:54 AM
+-- Generation Time: Nov 21, 2019 at 09:56 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.32
 
@@ -31,6 +31,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `branch` (
   `LOCATION_ID` varchar(40) NOT NULL,
   `CITY` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Cards`
+--
+
+CREATE TABLE `Cards` (
+  `CARDNO` int(16) NOT NULL,
+  `EXPDATE` datetime NOT NULL,
+  `CARDNAME` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -84,17 +96,51 @@ CREATE TABLE `GasType` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Rentals`
+--
+
+CREATE TABLE `Rentals` (
+  `RID` int(13) NOT NULL,
+  `VID` int(13) NOT NULL,
+  `DLICENSE` int(13) NOT NULL,
+  `FROMDATE` date NOT NULL,
+  `FROMTIME` time NOT NULL,
+  `TODATE` date NOT NULL,
+  `TOTIME` time NOT NULL,
+  `ODOMETER` int(11) NOT NULL,
+  `CARDNO` int(16) NOT NULL,
+  `CONFNO` int(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Reservation`
 --
 
 CREATE TABLE `Reservation` (
   `CONFNO` int(13) NOT NULL,
   `VTNAME` varchar(40) NOT NULL,
-  `DLICENSE` varchar(40) NOT NULL,
+  `DLICENSE` int(13) NOT NULL,
   `FROMDATE` date NOT NULL,
   `FROMTIME` time NOT NULL,
   `TODATE` date NOT NULL,
   `TOTIME` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ReturnCar`
+--
+
+CREATE TABLE `ReturnCar` (
+  `RID` int(13) NOT NULL,
+  `DATE_ID` date NOT NULL,
+  `TIME_ID` time NOT NULL,
+  `ODOMETER` int(11) NOT NULL,
+  `FULLTANK` tinyint(1) NOT NULL,
+  `VALUE_ID` int(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -111,10 +157,12 @@ CREATE TABLE `Vehicle` (
   `YEAR` year(4) NOT NULL,
   `COLOR` varchar(40) NOT NULL,
   `ODOMETER` int(11) NOT NULL,
-  `STATUS_ID` varchar(40) NOT NULL,
+  `STATUS_ID` int(11) NOT NULL,
   `VTNAME` varchar(40) NOT NULL,
   `LOCATION_ID` varchar(40) DEFAULT NULL,
-  `CITY` varchar(40) DEFAULT NULL
+  `CITY` varchar(40) DEFAULT NULL,
+  `GASTYPE_ID` int(11) NOT NULL,
+  `reserved` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -146,6 +194,12 @@ ALTER TABLE `branch`
   ADD PRIMARY KEY (`LOCATION_ID`,`CITY`);
 
 --
+-- Indexes for table `Cards`
+--
+ALTER TABLE `Cards`
+  ADD PRIMARY KEY (`CARDNO`);
+
+--
 -- Indexes for table `CarStatus`
 --
 ALTER TABLE `CarStatus`
@@ -171,6 +225,16 @@ ALTER TABLE `GasType`
   ADD PRIMARY KEY (`GASTYPE_ID`);
 
 --
+-- Indexes for table `Rentals`
+--
+ALTER TABLE `Rentals`
+  ADD PRIMARY KEY (`RID`),
+  ADD KEY `VID` (`VID`),
+  ADD KEY `CONFNO` (`CONFNO`),
+  ADD KEY `DLICENSE` (`DLICENSE`),
+  ADD KEY `CARDNO` (`CARDNO`);
+
+--
 -- Indexes for table `Reservation`
 --
 ALTER TABLE `Reservation`
@@ -179,12 +243,21 @@ ALTER TABLE `Reservation`
   ADD UNIQUE KEY `DLICENSE` (`DLICENSE`);
 
 --
+-- Indexes for table `ReturnCar`
+--
+ALTER TABLE `ReturnCar`
+  ADD PRIMARY KEY (`RID`);
+
+--
 -- Indexes for table `Vehicle`
 --
 ALTER TABLE `Vehicle`
   ADD PRIMARY KEY (`VID`),
   ADD UNIQUE KEY `VLICENSE` (`VLICENSE`),
-  ADD UNIQUE KEY `VTNAME` (`VTNAME`);
+  ADD UNIQUE KEY `VTNAME` (`VTNAME`),
+  ADD KEY `LOCATION_ID` (`LOCATION_ID`,`CITY`),
+  ADD KEY `STATUS_ID` (`STATUS_ID`),
+  ADD KEY `GASTYPE_ID` (`GASTYPE_ID`);
 
 --
 -- Indexes for table `VehicleType`
@@ -197,10 +270,35 @@ ALTER TABLE `VehicleType`
 --
 
 --
+-- Constraints for table `Rentals`
+--
+ALTER TABLE `Rentals`
+  ADD CONSTRAINT `rentals_ibfk_1` FOREIGN KEY (`VID`) REFERENCES `Vehicle` (`VID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rentals_ibfk_2` FOREIGN KEY (`CONFNO`) REFERENCES `Reservation` (`CONFNO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rentals_ibfk_3` FOREIGN KEY (`DLICENSE`) REFERENCES `Customer` (`DLICENSE`),
+  ADD CONSTRAINT `rentals_ibfk_4` FOREIGN KEY (`CARDNO`) REFERENCES `Cards` (`CARDNO`);
+
+--
+-- Constraints for table `Reservation`
+--
+ALTER TABLE `Reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`VTNAME`) REFERENCES `VehicleType` (`VTNAME`),
+  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`DLICENSE`) REFERENCES `Customer` (`DLICENSE`);
+
+--
+-- Constraints for table `ReturnCar`
+--
+ALTER TABLE `ReturnCar`
+  ADD CONSTRAINT `returncar_ibfk_1` FOREIGN KEY (`RID`) REFERENCES `Rentals` (`RID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `Vehicle`
 --
 ALTER TABLE `Vehicle`
-  ADD CONSTRAINT `vehicle_ibfk_1` FOREIGN KEY (`VTNAME`) REFERENCES `VehicleType` (`VTNAME`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `vehicle_ibfk_1` FOREIGN KEY (`VTNAME`) REFERENCES `VehicleType` (`VTNAME`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vehicle_ibfk_2` FOREIGN KEY (`LOCATION_ID`,`CITY`) REFERENCES `branch` (`LOCATION_ID`, `CITY`),
+  ADD CONSTRAINT `vehicle_ibfk_3` FOREIGN KEY (`STATUS_ID`) REFERENCES `CarStatus` (`STATUS_ID`),
+  ADD CONSTRAINT `vehicle_ibfk_4` FOREIGN KEY (`GASTYPE_ID`) REFERENCES `GasType` (`GASTYPE_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
