@@ -14,8 +14,8 @@ if (isset($_POST["submit"])){
         $query = "INSERT INTO Customer (DLICENSE, CELLPHONE, NAME_ID, ADDRESS_ID) 
                 Values (:dlicense, :cellphone, :nameid, :addressid)";
         
-        global $conn;
-        $stmt = $conn->prepare($query);
+        global $ConnectingDB;
+        $stmt = $ConnectingDB->prepare($query);
         $stmt->bindValue(":cellphone", $cellphone);
         $stmt->bindValue(":nameid", $name);
         $stmt->bindValue(":dlicense", $dlicense);
