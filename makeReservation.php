@@ -1,39 +1,39 @@
 <?php
 // query code for making reservation
 require_once("DB.php");
+require_once("all-listings.php");
 if (isset($_POST["submit"])) {
     // empty input
     if (empty($_POST["cellphone_number"])
     || empty($_POST["name"])) {
         echo "ERROR: HEY! You are entering an invaild customer! <br/>";
     } else{
-        /* use includes to send me this information
+        // use includes to send me this information
         $address = $_POST["address"];
         $vtname = $_POST["vtname"];
         $fromDate = $_POST["fromDate"];
         $fromTime = $_POST["fromTime"];
         $toDate = $_POST["toDate"];
         $toTime = $_POST["toTime"];
-        */
         // make reservation successfully
         $dlicense = $_POST["dlicense"];
         $name = $_POST["name"];
         // there is a customer registered
         $query_select_customer = "SELECT * FROM Customer Where dlicense =  $dlicense";
-        $result = mysql_query($conn, $query_select_customer);
+        $result = mysql_query($ConnectingDB, $query_select_customer);
         if (mysql_num_rows($result) > 0) {
             $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
             $query_insert_reservation = "INSERT INTO Reservation (confNo, vtname, dlicense, fromDate, fromTime, toDate, toTime) 
                     Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
-                     mysqli_query($conn, $query_insert_reservation);
+                     mysqli_query($ConnectingDB, $query_insert_reservation);
                      if (mysql_affected_rows == 1) {
                          //  The database state should reflect this at the end of the action
                          echo "reservation has made!";
                          // don't forget to appear confirmation number
-                         mysql_close($conn);
+                         mysql_close($ConnectingDB);
                      } else {
                          echo "insertion fail";
-                         mysql_close($conn);
+                         mysql_close($ConnectingDB);
                      }
         } else {
             // go to add Customer page
@@ -61,6 +61,7 @@ if (isset($_POST["submit"])) {
 	<link rel="stylesheet" href="css/skeleton.css" media="screen" />
 	<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 	<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+
 
 	<!-- HTML5 Shiv + detect touch events -->
 	<script type="text/javascript" src="js/modernizr.custom.js"></script>

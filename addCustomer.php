@@ -1,6 +1,5 @@
-<?php
-// ? you can comment it out to try
-require_once("DB.php");
+<?php require_once("DB.php");
+
 if (isset($_POST["submit"])){
     if (empty($_POST["cellphone_number"])
     || empty($_POST["name"])
@@ -15,13 +14,12 @@ if (isset($_POST["submit"])){
         $query = "INSERT INTO Customer (DLICENSE, CELLPHONE, NAME_ID, ADDRESS_ID) 
                 Values (:dlicense, :cellphone, :nameid, :addressid)";
         
-        global $conn;
-        $stmt = $conn->prepare($query);
+        global $ConnectingDB;
+        $stmt = $ConnectingDB->prepare($query);
         $stmt->bindValue(":cellphone", $cellphone);
         $stmt->bindValue(":nameid", $name);
         $stmt->bindValue(":dlicense", $dlicense);
         $stmt->bindValue(":addressid", $address);
-        // i don't know why there is problem aaaaa!
         $Execute = $stmt->execute();
         if ($Execute) {
             echo "We have added you, let's start to make reservation !";

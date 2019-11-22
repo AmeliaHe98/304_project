@@ -5,4 +5,4 @@ $dbUsername = "root";
 $dbPassword = "";
 $dbName = "carrental";
 
-$conn = new PDO($dbServername, $dbUsername, $dbPassword);
+$ConnectingDB = new PDO($dbServername, $dbUsername, $dbPassword);
