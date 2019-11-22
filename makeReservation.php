@@ -33,7 +33,8 @@ if (isset($_POST["submit"])) {
                          mysql_close($ConnectingDB);
                      } else {
                          echo "insertion fail";
-                         mysql_close($ConnectingDB);
+                         mysql_close($ConnectingDB
+                        );
                      }
         } else {
             // go to add Customer page
