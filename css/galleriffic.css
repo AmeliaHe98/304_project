@@ -63,7 +63,7 @@ ul.thumbs {
 		margin: 5px 10px 5px 0;
 		list-style: none;
 	}
-	
+
 		ul.thumbs li.selected a.thumb img {
 			opacity: 1;
 			filter: alpha(opacity = 100);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2019 at 09:57 AM
+-- Generation Time: Nov 22, 2019 at 03:59 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.32
 
@@ -33,6 +33,18 @@ CREATE TABLE `branch` (
   `CITY` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `branch`
+--
+
+INSERT INTO `branch` (`LOCATION_ID`, `CITY`) VALUES
+('BURNABY_0', 'VANCOUVER'),
+('RICHMOND_0', 'VANCOUVER'),
+('RICHMOND_1', 'VANCOUVER'),
+('RICHMOND_2', 'VANCOUVER'),
+('VANCO', ''),
+('VANCOUVER_0', 'VANCOUVER');
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +57,16 @@ CREATE TABLE `Cards` (
   `CARDNAME` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `Cards`
+--
+
+INSERT INTO `Cards` (`CARDNO`, `EXPDATE`, `CARDNAME`) VALUES
+(234521345, '2019-11-29 00:00:00', 'Amelia He'),
+(349302890, '2019-11-30 00:00:00', 'Java Zhu'),
+(1234567890, '2019-12-31 00:00:00', 'Myra Yao'),
+(1329048023, '2020-03-13 00:00:00', 'Angela Baby');
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +77,16 @@ CREATE TABLE `CarStatus` (
   `STATUS_ID` int(11) NOT NULL,
   `CAR_STATUS` char(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `CarStatus`
+--
+
+INSERT INTO `CarStatus` (`STATUS_ID`, `CAR_STATUS`) VALUES
+(123425, 'valid'),
+(314551, 'rented'),
+(534567, 'valid'),
+(987678, 'rented');
 
 -- --------------------------------------------------------
 
@@ -68,6 +100,16 @@ CREATE TABLE `Customer` (
   `NAME_ID` varchar(40) DEFAULT NULL,
   `ADDRESS_ID` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `Customer`
+--
+
+INSERT INTO `Customer` (`DLICENSE`, `CELLPHONE`, `NAME_ID`, `ADDRESS_ID`) VALUES
+(867564638, 780867889, NULL, NULL),
+(867896456, 234546657, NULL, NULL),
+(1235269788, 1345345678, NULL, NULL),
+(1235269789, 778681020, 'myra', NULL);
 
 -- --------------------------------------------------------
 
@@ -93,6 +135,14 @@ CREATE TABLE `GasType` (
   `GASTYPE` char(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `GasType`
+--
+
+INSERT INTO `GasType` (`GASTYPE_ID`, `GASTYPE`) VALUES
+(123354456, NULL),
+(1345243456, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +162,14 @@ CREATE TABLE `Rentals` (
   `CONFNO` int(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `Rentals`
+--
+
+INSERT INTO `Rentals` (`RID`, `VID`, `DLICENSE`, `FROMDATE`, `FROMTIME`, `TODATE`, `TOTIME`, `ODOMETER`, `CARDNO`, `CONFNO`) VALUES
+(12345, 234587, 867896456, '2019-11-13', '12:00:00', '2019-11-11', '12:00:00', 100, 349302890, 12345),
+(111111, 234587, 1235269788, '2019-11-15', '14:00:00', '2019-11-24', '25:00:00', 100, 234521345, 12345);
+
 -- --------------------------------------------------------
 
 --
@@ -128,6 +186,14 @@ CREATE TABLE `Reservation` (
   `TOTIME` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `Reservation`
+--
+
+INSERT INTO `Reservation` (`CONFNO`, `VTNAME`, `DLICENSE`, `FROMDATE`, `FROMTIME`, `TODATE`, `TOTIME`) VALUES
+(12345, '12345', 867564638, '2019-11-21', '13:00:00', '2019-11-23', '52:00:00'),
+(23456, '23456', 1235269788, '2019-11-24', '00:00:00', '2019-11-30', '40:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -142,6 +208,14 @@ CREATE TABLE `ReturnCar` (
   `FULLTANK` tinyint(1) NOT NULL,
   `VALUE_ID` int(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ReturnCar`
+--
+
+INSERT INTO `ReturnCar` (`RID`, `DATE_ID`, `TIME_ID`, `ODOMETER`, `FULLTANK`, `VALUE_ID`) VALUES
+(12345, '2019-11-20', '19:00:00', 100, 1, 150),
+(111111, '2019-11-20', '19:00:00', 120, 0, 14);
 
 -- --------------------------------------------------------
 
@@ -165,6 +239,14 @@ CREATE TABLE `Vehicle` (
   `reserved` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `Vehicle`
+--
+
+INSERT INTO `Vehicle` (`VID`, `VLICENSE`, `MAKE`, `MODEL`, `YEAR`, `COLOR`, `ODOMETER`, `STATUS_ID`, `VTNAME`, `LOCATION_ID`, `CITY`, `GASTYPE_ID`, `reserved`) VALUES
+(12355, 23464, 'Benz', 'C 300', 2017, 'white', 300, 314551, '12345', 'BURNABY_0', NULL, 123354456, 1),
+(234587, 321823, 'Benz', 'GLC', 2015, 'white', 399, 123425, '23456', 'RICHMOND_2', NULL, 123354456, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -182,6 +264,14 @@ CREATE TABLE `VehicleType` (
   `HIRATE` int(11) DEFAULT NULL,
   `KRATE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `VehicleType`
+--
+
+INSERT INTO `VehicleType` (`VTNAME`, `FEATURES`, `WRATE`, `DRATE`, `HRATE`, `WIRATE`, `DIRATE`, `HIRATE`, `KRATE`) VALUES
+('12345', 'truck', 5, 50, 10, 20, 50, 15, 51),
+('23456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
