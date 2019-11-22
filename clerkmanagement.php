@@ -8,32 +8,18 @@ require_once("DB.php");
 		<title>View Data from Database</title>
         </head>
 	<body>
+    <h2 class="success"> <?php echo @$_GET["id"]; ?> </h2>
 		<div>
         <form class="" action="clerkmanagement.php" method="POST">
-					<input type="text" name="Search" value="" placeholder="Search by vid/status/vtname"><br><br>
+					<input type="text" name="Search" value="" placeholder="Search by vid/status/vtname" size = 100><br><br>
 					<input type="submit" name="SearchButton" value="Search record">
 				</form>
 		</div>
 
         <?php
 		if (isset($_POST["SearchButton"])) {
-            global $ConnectingDB;
-            $query = "SELECT * FROM Verichle";
-            $stmt = $ConnectingDB->query($query);
-            while ($DataRows = $stmt->fetch()) {
-                $VID = $DataRows["VID"];
-                $VLICENSE = $DataRows["VLICENSE"];
-                $MAKE  = $DataRows["MAKE"];
-                $MODEL = $DataRows["MODEL"];
-                $YEAR  = $DataRows["YEAR"];
-                $COLOR = $DataRows["COLOR"];
-                 $ODOMETER = $DataRows["ODOMETER"];
-                 $STATUS = $DataRows["STATUS"];
-                 $VTNAME = $DataRows["VTNAME"];
-                 $LOCATION = $DataRows["LOCATION"];
-                 $CITY  = $DataRows["CITY"];
-                 ?>
-                 <div>
+        ?>
+            <div>
                  <table width="1000">
                  <caption>Search Result</caption>
 			<tr>
@@ -51,6 +37,25 @@ require_once("DB.php");
                 <th>RENT</th>
                 <th>RETURN</th>
             </tr>
+
+            <?php
+            global $ConnectingDB;
+            $query = "SELECT * FROM Vehicle";
+            $stmt = $ConnectingDB->prepare($query);
+            $stmt->execute();
+            while ($DataRows = $stmt->fetch()) {
+                $VID = $DataRows["VID"];
+                $VLICENSE = $DataRows["VLICENSE"];
+                $MAKE  = $DataRows["MAKE"];
+                $MODEL = $DataRows["MODEL"];
+                $YEAR  = $DataRows["YEAR"];
+                $COLOR = $DataRows["COLOR"];
+                 $ODOMETER = $DataRows["ODOMETER"];
+                 $STATUS = $DataRows["STATUS_ID"];
+                 $VTNAME = $DataRows["VTNAME"];
+                 $LOCATION = $DataRows["LOCATION_ID"];
+                 $CITY  = $DataRows["CITY"];
+                 ?>
             <tr>
             <td><?php echo $VID; ?></td>
             <td><?php echo $VLICENSE; ?></td>
@@ -66,15 +71,15 @@ require_once("DB.php");
             <td class="RentButton"> <a href="rent.php?id=<?php echo $Id; ?>">Rent</a> </td>
             <td class="ReturnButton"> <a href="return.php?id=<?php echo $Id; ?>">Return</a></td>
             </tr>
-            </table>
-             </div>
-        </body>
+          
+             
 <?php	} //Ending of While Loop
 	}//Ending of Submit button
 
 		?>
-
-
+</table>
+</div>
+</body>
 </html>
 
 
