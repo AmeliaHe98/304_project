@@ -29,9 +29,32 @@
 		<nav id="navigation" class="navigation">
 			
 			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.html">Browse All</a></li>
-				<li><a href="sales-reps.html">Clerks Action</a></li>
+				<li class="current-menu-item"><a href="index.html">Home</a></li>
+				<li><a href="all-listings.html">Browse By</a>
+					<ul>
+						<li><a href="all-listings.html">All Listings</a></li>
+						<li><a href="#">Manufacturer</a>
+							<ul>
+								<li><a href="one-products.html">Aston Martin</a></li>
+								<li><a href="one-products.html">Audi</a></li>
+								<li><a href="one-products.html">BMW</a></li>
+								<li><a href="one-products.html">Chevrolet</a></li>
+								<li><a href="one-products.html">Mercedes Benz</a></li>
+								<li><a href="one-products.html">Ferrari</a></li>
+								<li><a href="one-products.html">Lexus</a></li>
+								<li><a href="one-products.html">Porsche</a></li>
+								<li><a href="one-products.html">Toyota</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Body Type</a></li>
+						<li><a href="#">Engine Size</a></li>
+						<li><a href="#">Mileage</a></li>
+						<li><a href="#">Model Year</a></li>
+						<li><a href="#">Price Range</a></li>
+						<li><a href="#">Transmission</a></li>
+					</ul>
+				</li>
+				<li><a href="sales-reps.html">Sales Reps</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
@@ -47,175 +70,10 @@
 
 		<section class="container sbl clearfix">
 
-			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->		
-
-			<section id="content" class="twelve columns">
-				
-				<div class="recent-list-cars">
-					
-					<h3 class="widget-title"><span>Available</span> Automobiles</h3>
-				
-					<ul class="recent-list-cars clearfix">
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-						</li>
-
-						<li>
-
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>	
-						
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">VTNAME</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-					</ul><!--/ .recent-list-cars-->					
-					
-				</div><!--/ .recent-list-cars-->
-				
-				<div class="wp-pagenavi clearfix">
-					
-					<span class="pages">Page 1 of 2</span>
-					<a class="prevpostslink" href="#"></a>
-					<span class="current">1</span>
-					<a class="page" href="#">2</a>
-					<a class="nextpostslink" href="#"></a>
-					
-				</div><!--/ .wp-pagenavi-->
-
-			</section><!--/ #content-->
+			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+			<section class="container py-2 mb-4">		
+				<div class="row" style="min-height:50px; background:red;"> </div>
+			</section>
 
 			<!-- - - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - - -->	
 
@@ -227,31 +85,43 @@
 				
 				<div class="widget-container widget_custom_search">
 
-					<h3 class="widget-title">Find Your Car</h3>
+					<h3 class="widget-title">Quick Search</h3>
 
 					<form action="/" id="boxpanel" class="form-panel" />
 
 						<fieldset>
 							<label for="manufacturer">Start date:</label>
 							<select id="manufacturer" name="manufacturer">
+								<option value="0" />Any
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
 							</select>
 						</fieldset>
 
 						<fieldset>
 							<label for="minprice">End date:</label>
 							<select id="minprice" name="minprice">
+								<option value="0" />No min
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
 							</select>
 						</fieldset>
 
 						<fieldset>
 							<label for="maxprice">Start time:</label>
 							<select id="maxprice" name="maxprice">
+								<option value="0" />No max
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
 							</select>
 						</fieldset>
 
 						<fieldset>
 							<label for="trans">End time:</label>
 							<select id="trans" name="trans">
+								<option value="0" />Any
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
 							</select>
 						</fieldset>
 
@@ -367,6 +237,35 @@
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
 	
 </div><!--/ .wrap-->
+
+<div class="account-wrapper">
+	
+	<form class="form-reg" method="post" action="" />
+		
+		<a href="#" class="log">Login</a>
+		
+		<p>
+			<label>Username*</label>
+			<input class="input-medium" type="text" />
+		</p>
+		
+		<p>
+			<label>Password*</label>
+			<input class="input-medium" type="password" />
+		</p>
+		
+		<p class="forgot-pass">
+			<a href="#">Forgot your password?</a>
+		</p>
+		
+		<p>
+			<a href="#" class="button dark enter-btn">Login</a>
+			<a href="#" class="button dark enter-btn">Create an account</a>
+		</p>
+		
+	</form><!--/ .form-reg-->
+	
+</div><!--/ .account-wrapper-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
