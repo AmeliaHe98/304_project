@@ -1,6 +1,6 @@
 <?php
 // ? you can comment it out to try
-// require_once("database.php");
+require_once("database.php");
 if (isset($_POST["submit"])){
     if (empty($_POST["cellphone_number"])
     || empty($_POST["name"])
@@ -12,21 +12,24 @@ if (isset($_POST["submit"])){
         $name = $_POST["name"];
         $dlicense = $_POST["dlicense"];
         $address = $_POST["address"];
-        $query = "INSERT INTO Customer (cellphone, name, address, dlicense) 
-                Values ($cellphone, $name, $dlicense, $address)";
+        $query = "INSERT INTO Customer (DLICENSE, CELLPHONE, NAME_ID, ADDRESS_ID) 
+                Values (:dlicense, :cellphone, :nameid, :addressid)";
         
-        mysqli_query($conn, $query);
-        if (mysql_affected_rows == 1) {
+        global $conn;
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(":dlicense", $dlicense);
+        $stmt->bindValue(":cellphone", $cellphone);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":address", $address);
+        $Execute = $stmt->execute();
+        if ($Execute) {
             echo "We have added you, let's start to make reservation !";
-            mysql_close($conn);
         } else {
             echo "insertion fail";
-            echo mysql_error;
-            mysql_close($conn);
         }
     }
     // we can go back to the reservation page through this statement
-    // header("Location: ...");
+    header("http://localhost:8080/304_project/makeReservation.php");
 }
 ?>
 
