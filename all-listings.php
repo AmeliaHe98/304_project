@@ -87,13 +87,11 @@
 					} ?>
 					<ul class="recent-list-cars clearfix">
 						<li>
-								<h6 class="title-list-item"><?php echo $STATUS_ID; ?></h6>
+								<h3>VEHICLE MODEL <?php echo $MODEL; ?></h3>
 								<div class="detailed">
-									<span>MODEL <?php $MODEL; ?>YEAR <?php $YEAR; ?></span>
-									<span>LOCATION <?php $LOCATION_ID; ?>CITY <?php $CITY; ?></span> 
-									<span>GASTYPE <?php $GASTYPE_ID; ?>ODOMETER <?php $ODOMETER; ?></span> 
+									<h6>LOCATION <?php echo $LOCATION_ID; ?> <br>CITY <?php echo $CITY; ?><br>YEAR <?php echo $YEAR; ?><br>GASTYPE <?php echo $GASTYPE_ID; ?> <br>ODOMETER <?php echo $ODOMETER; ?></h6> 
 								</div><!--/ .detailed-->
-								<a href="#" class="button orange">RESERVE</a>
+								<a href="addCustomer.php" class="button orange">RESERVE</a>
 							</li>
 						</ul><!--/ .recent-list-cars-->		
 					<tr>
