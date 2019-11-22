@@ -8,10 +8,9 @@ require_once("DB.php");
 		<title>View Data from Database</title>
         </head>
 	<body>
-    <h2 class="success"> <?php echo @$_GET["id"]; ?> </h2>
 		<div>
         <form class="" action="clerkmanagement.php" method="POST">
-					<input type="text" name="Search" value="" placeholder="Search by vid/status/vtname" size = 100><br><br>
+					<input type="text" name="Search" value="" placeholder="Search by vtname" size = 100><br><br>
 					<input type="submit" name="SearchButton" value="Search record">
 				</form>
 		</div>
@@ -40,7 +39,8 @@ require_once("DB.php");
 
             <?php
             global $ConnectingDB;
-            $query = "SELECT * FROM Vehicle";
+            $Search = $_POST["Search"];
+            $query = "SELECT * FROM Vehicle WHERE VTNAME = $Search";
             $stmt = $ConnectingDB->prepare($query);
             $stmt->execute();
             while ($DataRows = $stmt->fetch()) {
@@ -64,12 +64,12 @@ require_once("DB.php");
             <td><?php echo $YEAR; ?></td>
             <td><?php echo $COLOR;?></td>
             <td><?php echo $ODOMETER;?></td>
-            <td><?php echo $ODOMETER;?></td>
-            <td><?php echo $ODOMETER;?></td>
-            <td><?php echo $ODOMETER;?></td>
-            <td><?php echo $ODOMETER;?></td>
-            <td class="RentButton"> <a href="rent.php?id=<?php echo $Id; ?>">Rent</a> </td>
-            <td class="ReturnButton"> <a href="return.php?id=<?php echo $Id; ?>">Return</a></td>
+            <td><?php echo $STATUS;?></td>
+            <td><?php echo $VTNAME;?></td>
+            <td><?php echo $LOCATION;?></td>
+            <td><?php echo $CITY ;?></td>
+            <td class="RentButton"> <a href="rent.php?id=<?php echo $VID; ?>">Rent</a> </td>
+            <td class="ReturnButton"> <a href="return.php?id=<?php echo $VID; ?>">Return</a></td>
             </tr>
           
              
