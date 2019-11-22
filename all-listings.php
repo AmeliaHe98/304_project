@@ -43,101 +43,9 @@
 	
 	
 	<div class="main">
+					<!-- - - - - - - - - - - - - - - Sidebar - - - - - - - - - - - - - - - - -->	
 
-		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
-
-		<section class="container py-2 mb-8">
-		<div class="recent-list-cars">
-			<h3 class="widget-title"><span>Available</span> Automobiles</h3>
-			<div class="col-lg-12">
-				<table>
-					<!-- <tr>
-						<th>VID</th>
-						<th>VLICENSE</th>
-						<th>MAKE</th>
-						<th>MODEL</th>
-						<th>YEAR</th>
-						<th>COLOR</th>
-						<th>ODOMETER</th>
-						<th>STATUS_ID</th>
-						<th>VTNAME</th>
-						<th>LOCATION_ID</th>
-						<th>CITY</th>
-						<th>GASTYPE_ID</th>
-						<th>reserved</th>
-					</tr> -->
-					<?php
-					global $ConnectingDB;
-					$sql="SELECT * FROM Vehicle"  ;
-					$stmt = $ConnectingDB->query($sql);
-					while($DataRows = $stmt->fetch()){
-						$VID		=$DataRows["VID"];
-						$VLICENSE	=$DataRows["VLICENSE"];
-						$MAKE		=$DataRows["MAKE"];
-						$MODEL		=$DataRows["MODEL"];
-						$YEAR		=$DataRows["YEAR"];
-						$COLOR		=$DataRows["COLOR"];
-						$ODOMETER	=$DataRows["ODOMETER"];
-						$STATUS_ID	=$DataRows["STATUS_ID"];
-						$VTNAME		=$DataRows["VTNAME"];
-						$LOCATION_ID=$DataRows["LOCATION_ID"];
-						$CITY		=$DataRows["CITY"];
-						$GASTYPE_ID	=$DataRows["GASTYPE_ID"];
-						$reserved	=$DataRows["reserved"];
-					?>
-					<ul class="recent-list-cars clearfix">
-						<li>
-								<h3>VEHICLE MODEL <?php echo htmlentities($MODEL); ?></h3>
-								<div class="detailed">
-									<h6>LOCATION <?php echo htmlentities($LOCATION_ID); ?> <br>CITY <?php echo htmlentities($CITY); ?><br>YEAR <?php echo htmlentities($YEAR); ?><br>GASTYPE <?php echo htmlentities($GASTYPE_ID); ?> <br>ODOMETER <?php echo htmlentities($ODOMETER); ?></h6> 
-								</div><!--/ .detailed-->
-								<a href="addCustomer.php" class="button orange">RESERVE</a>
-							</li>
-						<?php	} ?>
-						</ul><!--/ .recent-list-cars-->		
-					<tr>
-						<th><?php $VID; ?></th>
-						<th><?php $VLICENSE; ?></th>
-						<th><?php $MAKE; ?></th>
-						<th><?php $MODEL; ?></th>
-						<th><?php $YEAR; ?></th>
-						<th><?php $COLOR; ?></th>
-						<th><?php $ODOMETER; ?></th>
-						<th><?php $STATUS_ID; ?></th>
-						<th><?php $VTNAME; ?></th>
-						<th><?php $LOCATION_ID; ?></th>
-						<th><?php $CITY; ?></th>
-						<th><?php $GASTYPE_ID; ?></th>
-						<th><?php $reserved; ?></th>
-					</tr>
-
-				</table>
-			</div>
-		</div>
-
-
-			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->		
-
-			<section id="content" class="twelve columns">
-				
-				<div class="wp-pagenavi clearfix">
-					
-					<span class="pages">Page 1 of 2</span>
-					<a class="prevpostslink" href="#"></a>
-					<span class="current">1</span>
-					<a class="page" href="#">2</a>
-					<a class="nextpostslink" href="#"></a>
-					
-				</div><!--/ .wp-pagenavi-->
-
-			</section><!--/ #content-->
-
-			<!-- - - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - - -->	
-
-
-			<!-- - - - - - - - - - - - - - - Sidebar - - - - - - - - - - - - - - - - -->	
-
-			<aside id="sidebar" class="four columns">
+					<aside id="sidebar" class="four columns">
 				
 				
 				<div class="widget-container widget_custom_search">
@@ -178,6 +86,45 @@
 			</aside><!--/ #sidebar-->
 
 			<!-- - - - - - - - - - - - - end Sidebar - - - - - - - - - - - - - - - - -->
+
+		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+
+		<section class="container py-2 mb-8">
+		<div class="recent-list-cars">
+			<h3 class="widget-title"><span>Available</span> Automobiles</h3>
+			<div class="col-lg-12">
+					<?php
+					global $ConnectingDB;
+					$sql="SELECT * FROM Vehicle"  ;
+					$stmt = $ConnectingDB->query($sql);
+					while($DataRows = $stmt->fetch()){
+						$VID		=$DataRows["VID"];
+						$VLICENSE	=$DataRows["VLICENSE"];
+						$MAKE		=$DataRows["MAKE"];
+						$MODEL		=$DataRows["MODEL"];
+						$YEAR		=$DataRows["YEAR"];
+						$COLOR		=$DataRows["COLOR"];
+						$ODOMETER	=$DataRows["ODOMETER"];
+						$STATUS_ID	=$DataRows["STATUS_ID"];
+						$VTNAME		=$DataRows["VTNAME"];
+						$LOCATION_ID=$DataRows["LOCATION_ID"];
+						$CITY		=$DataRows["CITY"];
+						$GASTYPE_ID	=$DataRows["GASTYPE_ID"];
+						$reserved	=$DataRows["reserved"];
+					?>
+					<ul class="recent-list-cars clearfix">
+						<li>
+								<h3>VEHICLE MODEL <?php echo htmlentities($MODEL); ?></h3>
+								<div class="detailed">
+									<h6>LOCATION <?php echo htmlentities($LOCATION_ID); ?> <br>CITY <?php echo htmlentities($CITY); ?><br>YEAR <?php echo htmlentities($YEAR); ?><br>GASTYPE <?php echo htmlentities($GASTYPE_ID); ?> <br>ODOMETER <?php echo htmlentities($ODOMETER); ?></h6> 
+								</div><!--/ .detailed-->
+								<a href="addCustomer.php" class="button orange">RESERVE</a>
+							</li>
+						<?php	} ?>
+						</ul><!--/ .recent-list-cars-->	
+
+			</div>
+		</div>
 
 		</section><!--/.container -->
 
