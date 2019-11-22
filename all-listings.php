@@ -1,3 +1,4 @@
+<?php require_once("DB.php");?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
@@ -45,165 +46,80 @@
 
 		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
 
-		<section class="container sbl clearfix">
+		<section class="container py-2 mb-8">
+		<div class="recent-list-cars">
+			<h3 class="widget-title"><span>Available</span> Automobiles</h3>
+			<div class="col-lg-12">
+				<table>
+					<!-- <tr>
+						<th>VID</th>
+						<th>VLICENSE</th>
+						<th>MAKE</th>
+						<th>MODEL</th>
+						<th>YEAR</th>
+						<th>COLOR</th>
+						<th>ODOMETER</th>
+						<th>STATUS_ID</th>
+						<th>VTNAME</th>
+						<th>LOCATION_ID</th>
+						<th>CITY</th>
+						<th>GASTYPE_ID</th>
+						<th>reserved</th>
+					</tr> -->
+					<?php
+					global $ConnectingDB;
+					$sql="SELECT * FROM Vehicle"  ;
+					$stmt = $ConnectingDB->query($sql);
+					while($DataRows = $stmt->fetch()){
+						$VID		=$DataRows["VID"];
+						$VLICENSE	=$DataRows["VLICENSE"];
+						$MAKE		=$DataRows["MAKE"];
+						$MODEL		=$DataRows["MODEL"];
+						$YEAR		=$DataRows["YEAR"];
+						$COLOR		=$DataRows["COLOR"];
+						$ODOMETER	=$DataRows["ODOMETER"];
+						$STATUS_ID	=$DataRows["STATUS_ID"];
+						$VTNAME		=$DataRows["VTNAME"];
+						$LOCATION_ID=$DataRows["LOCATION_ID"];
+						$CITY		=$DataRows["CITY"];
+						$GASTYPE_ID	=$DataRows["GASTYPE_ID"];
+						$reserved	=$DataRows["reserved"];
+					} ?>
+					<ul class="recent-list-cars clearfix">
+						<li>
+								<h6 class="title-list-item"><?php echo $STATUS_ID; ?></h6>
+								<div class="detailed">
+									<span>MODEL <?php $MODEL; ?>YEAR <?php $YEAR; ?></span>
+									<span>LOCATION <?php $LOCATION_ID; ?>CITY <?php $CITY; ?></span> 
+									<span>GASTYPE <?php $GASTYPE_ID; ?>ODOMETER <?php $ODOMETER; ?></span> 
+								</div><!--/ .detailed-->
+								<a href="#" class="button orange">RESERVE</a>
+							</li>
+						</ul><!--/ .recent-list-cars-->		
+					<tr>
+						<th><?php $VID; ?></th>
+						<th><?php $VLICENSE; ?></th>
+						<th><?php $MAKE; ?></th>
+						<th><?php $MODEL; ?></th>
+						<th><?php $YEAR; ?></th>
+						<th><?php $COLOR; ?></th>
+						<th><?php $ODOMETER; ?></th>
+						<th><?php $STATUS_ID; ?></th>
+						<th><?php $VTNAME; ?></th>
+						<th><?php $LOCATION_ID; ?></th>
+						<th><?php $CITY; ?></th>
+						<th><?php $GASTYPE_ID; ?></th>
+						<th><?php $reserved; ?></th>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+
 
 			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->		
 
 			<section id="content" class="twelve columns">
-				
-				<div class="recent-list-cars">
-					
-					<h3 class="widget-title"><span>Available</span> Automobiles</h3>
-				
-					<ul class="recent-list-cars clearfix">
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-						</li>
-
-						<li>
-
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>	
-						
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">2009 Aston Martin DB9</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-						<li>
-
-							<a href="#" class="list-meta">
-								<h6 class="title-list-item">VTNAME</h6>
-							</a>
-
-							<div class="detailed">
-								<span class="cost">MODEL YEAR GASTYPE_ID</span>
-								<span>LOCATION_ID CITY</span> <br />
-								<b>ODOMETER</b>	
-							</div><!--/ .detailed-->
-
-							<a href="#" class="button orange">RESERVE</a>
-
-						</li>
-
-					</ul><!--/ .recent-list-cars-->					
-					
-				</div><!--/ .recent-list-cars-->
 				
 				<div class="wp-pagenavi clearfix">
 					
