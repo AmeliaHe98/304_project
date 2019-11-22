@@ -1,6 +1,6 @@
 <?php
 // ? you can comment it out to try
-require_once("database.php");
+require_once("DB.php");
 if (isset($_POST["submit"])){
     if (empty($_POST["cellphone_number"])
     || empty($_POST["name"])
@@ -17,19 +17,21 @@ if (isset($_POST["submit"])){
         
         global $conn;
         $stmt = $conn->prepare($query);
-        $stmt->bindValue(":dlicense", $dlicense);
         $stmt->bindValue(":cellphone", $cellphone);
-        $stmt->bindValue(":name", $name);
-        $stmt->bindValue(":address", $address);
+        $stmt->bindValue(":nameid", $name);
+        $stmt->bindValue(":dlicense", $dlicense);
+        $stmt->bindValue(":addressid", $address);
+        // i don't know why there is problem aaaaa!
         $Execute = $stmt->execute();
         if ($Execute) {
             echo "We have added you, let's start to make reservation !";
+            // we can go back to the reservation page through this statement
+            // Redirect_to("makeReservation.php");
         } else {
             echo "insertion fail";
         }
     }
-    // we can go back to the reservation page through this statement
-    header("http://localhost:8080/304_project/makeReservation.php");
+    
 }
 ?>
 
