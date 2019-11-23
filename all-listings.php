@@ -118,7 +118,9 @@
 								<div class="detailed">
 									<h6>LOCATION <?php echo htmlentities($LOCATION_ID); ?> <br>CITY <?php echo htmlentities($CITY); ?><br>YEAR <?php echo htmlentities($YEAR); ?><br>GASTYPE <?php echo htmlentities($GASTYPE_ID); ?> <br>ODOMETER <?php echo htmlentities($ODOMETER); ?></h6> 
 								</div><!--/ .detailed-->
-								<a href="addCustomer.php" class="button orange">RESERVE</a>
+								<form action="makeReservation.php?>">
+                    			<input type = "RESERVE" name = "RESERVE" class="button orange" value = "reserve" />
+                    			</form>
 							</li>
 						<?php	} ?>
 						</ul><!--/ .recent-list-cars-->	

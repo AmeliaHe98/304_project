@@ -26,8 +26,8 @@ if (isset($_POST["submit"])) {
         if ($count > 0) {
             $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-                    Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
-                    // Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
+            Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
+                   // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
                         $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
                         $Execute = $stmt_reservation->execute();
                         if ($Execute) {

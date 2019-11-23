@@ -77,7 +77,7 @@ $Parameter = $_GET["id"];
                 </div>
                 <p>
                     <br><br><br>
-                    <form action="returnReciept.php?id=<?php echo $_GET["id"];?>">
+                    <form action="returnReciept.php?id=<?php echo $_GET["id"]?>">
                     <input type = "submit" name = "submit" class="btn btn-info btn-block" style="height: 500px; width: 80px; left: 250; top: 250;" value = "SIGN UP" />
                     </form>
                 </p>
