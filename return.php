@@ -3,6 +3,7 @@ require_once("DB.php");
 global $ConnectingDB;
 $Parameter = $_GET["id"];
 
+
 if (isset($_POST["submit"])){
     if (empty($_POST["TIMEID"])
     || empty($_POST["ODOMETER"])
@@ -21,8 +22,8 @@ if (isset($_POST["submit"])){
         $stmt_select = $ConnectingDB->prepare($query_select);
         $stmt_select->execute();
         $DataRows_select = $stmt_select->fetch();
-        $RID = $DataRows_selecttype["RID"];
-        $CONFNO= $DataRows_selecttype["RID"];
+        $RID = $DataRows_select["RID"];
+        $CONFNO= $DataRows_select["RID"];
         // add the information into returns
 
         $DATE_ID = $_POST["DATE_ID"];
@@ -33,7 +34,7 @@ if (isset($_POST["submit"])){
         $query_return = "INSERT INTO ReturnCar (RID, DATE_ID, TIMEID, ODOMETER, FULLTANK, VALUE_ID) 
         Values ($RID, $DATE_ID, $TIMEID, $ODOMETER, $FULLTANK, $VALUE_ID)";
         $stmt_return = $ConnectingDB->prepare($query_return);
-        $Execute = $stmt->execute();
+        $Execute = $stmt_return->execute();
         // When returning a vehicle, the system will display a receipt with the necessary details 
         // (e.g., reservation confirmation number, date of return, how the total was calculated etc.) for the customer.
         if ($Execute) {
@@ -61,7 +62,7 @@ if (isset($_POST["submit"])){
               <br>
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="return.php" method="post">
+              <form class="" action="return.php?id=<?php echo $_GET["id"];?>" method="post">
                 <div class="form-group">
                   <label for="DATE_ID"><span class="FieldInfo"><h4>DATE</h4></span></label>
                   <div class="input-group mb-3">
