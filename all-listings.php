@@ -45,138 +45,112 @@
 	<div class="main">
 
 		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+		<section class="listing-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-md-push-3">
+        <div class="result-sorting-wrapper">
+          <div class="sorting-count">
+<?php 
+//Query for Listing count
+$sql = "SELECT VTNAME from Vehicle";
+$query = $ConnectingDB -> prepare($sql);
+$query->bindParam(':VID',$VID, PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=$query->rowCount();
+?>
+<p><span><?php echo htmlentities($cnt);?> Listings</span></p>
+</div>
+</div>
 
-		<section class="container py-2 mb-8">
-		<div class="recent-list-cars">
-			<h3 class="widget-title"><span>Available</span> Automobiles</h3>
-			<div class="col-lg-12">
-				<table>
-					<!-- <tr>
-						<th>VID</th>
-						<th>VLICENSE</th>
-						<th>MAKE</th>
-						<th>MODEL</th>
-						<th>YEAR</th>
-						<th>COLOR</th>
-						<th>ODOMETER</th>
-						<th>STATUS_ID</th>
-						<th>VTNAME</th>
-						<th>LOCATION_ID</th>
-						<th>CITY</th>
-						<th>GASTYPE_ID</th>
-						<th>reserved</th>
-					</tr> -->
-					<?php
-					global $ConnectingDB;
-					$sql="SELECT * FROM Vehicle"  ;
-					$stmt = $ConnectingDB->query($sql);
-					while($DataRows = $stmt->fetch()){
-						$VID		=$DataRows["VID"];
-						$VLICENSE	=$DataRows["VLICENSE"];
-						$MAKE		=$DataRows["MAKE"];
-						$MODEL		=$DataRows["MODEL"];
-						$YEAR		=$DataRows["YEAR"];
-						$COLOR		=$DataRows["COLOR"];
-						$ODOMETER	=$DataRows["ODOMETER"];
-						$STATUS_ID	=$DataRows["STATUS_ID"];
-						$VTNAME		=$DataRows["VTNAME"];
-						$LOCATION_ID=$DataRows["LOCATION_ID"];
-						$CITY		=$DataRows["CITY"];
-						$GASTYPE_ID	=$DataRows["GASTYPE_ID"];
-						$reserved	=$DataRows["reserved"];
-					} ?>
-					<ul class="recent-list-cars clearfix">
-						<li>
-								<h3>VEHICLE MODEL <?php echo $MODEL; ?></h3>
-								<div class="detailed">
-									<h6>LOCATION <?php echo $LOCATION_ID; ?> <br>CITY <?php echo $CITY; ?><br>YEAR <?php echo $YEAR; ?><br>GASTYPE <?php echo $GASTYPE_ID; ?> <br>ODOMETER <?php echo $ODOMETER; ?></h6> 
-								</div><!--/ .detailed-->
-								<a href="addCustomer.php" class="button orange">RESERVE</a>
-							</li>
-						</ul><!--/ .recent-list-cars-->		
-					<tr>
-						<th><?php $VID; ?></th>
-						<th><?php $VLICENSE; ?></th>
-						<th><?php $MAKE; ?></th>
-						<th><?php $MODEL; ?></th>
-						<th><?php $YEAR; ?></th>
-						<th><?php $COLOR; ?></th>
-						<th><?php $ODOMETER; ?></th>
-						<th><?php $STATUS_ID; ?></th>
-						<th><?php $VTNAME; ?></th>
-						<th><?php $LOCATION_ID; ?></th>
-						<th><?php $CITY; ?></th>
-						<th><?php $GASTYPE_ID; ?></th>
-						<th><?php $reserved; ?></th>
-					</tr>
+<?php $sql = "SELECT * from Vehicle";
+$query = $ConnectingDB -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{  ?>
+        <div class="product-listing-m gray-bg">
+          <div class="product-listing-content">
+            <h5><a href="vehical-details.php?vhid=<?php echo htmlentities($result->VLICENSE);?>"><?php echo htmlentities($result->MAKE);?> , <?php echo htmlentities($result->MODEL);?></a></h5>
+            <p class="list-price"><?php echo htmlentities($result->ODOMETER);?> Miles Already Travelled</p>
+            <ul>
+              <li><?php echo htmlentities($result->COLOR);?> Color</li>
+              <li><?php echo htmlentities($result->YEAR);?> Year</li>
+            </ul>
+            <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+          </div>
+        </div>
+      <?php }} ?>
+         </div>
+      
+      <!--Side-Bar-->
+      <aside class="col-md-3 col-md-pull-9">
+        <div class="sidebar_widget">
+          <div class="widget_heading">
+            <h5><i class="fa fa-filter" aria-hidden="true"></i> Find Your Car </h5>
+          </div>
+          <div class="sidebar_filter">
+            <form action="search-carresult.php" method="post">
+			<form> 
+              <div class="form-group select">
+                <select class="form-control" name="brand">
+                  <option>Select Vehicle Type</option>
 
-				</table>
-			</div>
-		</div>
+                  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
+$query = $ConnectingDB -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{       ?>  
+<option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
+<?php }} ?>
+                 
+                </select>
+			  </div>
+</form> 
+			  <form> 
+			  <div class="form-group select">
+                <select class="form-control" name="brand">
+                  <option>Select Location</option>
+
+                  <?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
+$query = $ConnectingDB -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{       ?>  
+<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+<?php }} ?>
+                 
+                </select>
+			  </div>
+</form> 
+			  
+			  <form> 
+              <div class="form-group">
+                <button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
+              </div>
+			</form>
+</form> 
+          </div>
+        </div>
+      </aside>
+      <!--/Side-Bar--> 
+    </div>
+  </div>
+</section>
 
 
-			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->		
-
-			<section id="content" class="twelve columns">
-				
-				<div class="wp-pagenavi clearfix">
-					
-					<span class="pages">Page 1 of 2</span>
-					<a class="prevpostslink" href="#"></a>
-					<span class="current">1</span>
-					<a class="page" href="#">2</a>
-					<a class="nextpostslink" href="#"></a>
-					
-				</div><!--/ .wp-pagenavi-->
-
-			</section><!--/ #content-->
-
-			<!-- - - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - - -->	
-
-
-			<!-- - - - - - - - - - - - - - - Sidebar - - - - - - - - - - - - - - - - -->	
-
-			<aside id="sidebar" class="four columns">
-				
-				
-				<div class="widget-container widget_custom_search">
-
-					<h3 class="widget-title">Find Your Car</h3>
-
-					<form action="/" id="boxpanel" class="form-panel" />
-
-						<fieldset>
-							<label for="manufacturer">Start date:</label>
-							<select id="manufacturer" name="manufacturer">
-							</select>
-						</fieldset>
-
-						<fieldset>
-							<label for="minprice">End date:</label>
-							<select id="minprice" name="minprice">
-							</select>
-						</fieldset>
-
-						<fieldset>
-							<label for="maxprice">Start time:</label>
-							<select id="maxprice" name="maxprice">
-							</select>
-						</fieldset>
-
-						<fieldset>
-							<label for="trans">End time:</label>
-							<select id="trans" name="trans">
-							</select>
-						</fieldset>
-
-						<div class="clear"></div>
-						<button id="submitSearch" class="submit-search" type="submit">Search</button>
-
-					</form><!--/ .form-panel-->
-
-			</aside><!--/ #sidebar-->
-
-			<!-- - - - - - - - - - - - - end Sidebar - - - - - - - - - - - - - - - - -->
 
 		</section><!--/.container -->
 
