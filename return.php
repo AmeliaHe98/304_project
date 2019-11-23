@@ -1,6 +1,7 @@
 <?php
 require_once("DB.php");
 global $ConnectingDB;
+$Parameter = $_GET["id"];
 
         // update the car status
         $query_updatecar = "UPDATE Vehicle SET STATUS_ID = 'rented' WHERE VID = $Parameter";
@@ -76,7 +77,9 @@ global $ConnectingDB;
                 </div>
                 <p>
                     <br><br><br>
+                    <form action="returnReciept.php?id=<?php echo $_GET["id"];?>">
                     <input type = "submit" name = "submit" class="btn btn-info btn-block" style="height: 500px; width: 80px; left: 250; top: 250;" value = "SIGN UP" />
+                    </form>
                 </p>
             </p>
         </div>
