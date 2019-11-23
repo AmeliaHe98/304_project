@@ -95,56 +95,43 @@ foreach($results as $result)
           </div>
           <div class="sidebar_filter">
             <form action="search-carresult.php" method="post">
-			<form> 
               <div class="form-group select">
-                <select class="form-control" name="brand">
-                  <option>Select Vehicle Type</option>
-
-                  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
-$query = $ConnectingDB -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{       ?>  
-<option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
-<?php }} ?>
-                 
-                </select>
-			  </div>
-</form> 
-			  <form> 
-			  <div class="form-group select">
-                <select class="form-control" name="brand">
-                  <option>Select Location</option>
-
-                  <?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
-$query = $ConnectingDB -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{       ?>  
-<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
-<?php }} ?>
-                 
-                </select>
-			  </div>
-</form> 
-			  
-			  <form> 
-              <div class="form-group">
-                <button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
-              </div>
+                <select class="form-control" name="vtname">
+				  <option>Select Vehicle Type</option>
+				  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
+				  $query = $ConnectingDB -> prepare($sql);
+				  $query->execute();
+				  $results=$query->fetchAll(PDO::FETCH_OBJ);
+				  $cnt=1;
+				  if($query->rowCount() > 0){
+					  foreach($results as $result)
+					  {       ?>  
+					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
+					  <?php }} ?>
+					</select>
+				</div>
+				<div class="form-group select">
+                <select class="form-control" name="location_id">
+					<option>Select Location Type</option>
+					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
+				</div>
 			</form>
-</form> 
-          </div>
-        </div>
-      </aside>
+		</div>
+	</div>
+</aside>
       <!--/Side-Bar--> 
     </div>
   </div>
