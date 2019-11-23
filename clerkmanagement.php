@@ -10,7 +10,7 @@ require_once("DB.php");
 	<body>
 		<div>
         <form class="" action="clerkmanagement.php" method="POST">
-					<input type="text" name="Search" value="" placeholder="Search by vtname" size = 100><br><br>
+					<input type="text" name="Search" value="" placeholder="Search by vtname/ vid/ status" size = 100><br><br>
 					<input type="submit" name="SearchButton" value="Search record">
 				</form>
 		</div>
@@ -40,7 +40,8 @@ require_once("DB.php");
             <?php
             global $ConnectingDB;
             $Search = $_POST["Search"];
-            $query = "SELECT * FROM Vehicle WHERE VTNAME = $Search";
+            $query = "SELECT * FROM Vehicle 
+                      WHERE VTNAME = $Search OR VID = $Search OR STATUS_ID = STATUS";
             $stmt = $ConnectingDB->prepare($query);
             $stmt->execute();
             while ($DataRows = $stmt->fetch()) {
