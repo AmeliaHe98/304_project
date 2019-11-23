@@ -1,4 +1,3 @@
-
 <?php
 require_once("DB.php");
 $Parameter = $_GET["id"];
@@ -31,6 +30,8 @@ $
 // and then add to rentals
 $query_addrentals = "INSERT INTO Renatls (RID, VID, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME, ODOMETER, CONFNO) 
                 Values ($RID, $VID, $DLICENSE, $FROMDATE, $FROMTIME, $TODATE, $TOTIME $ODOMETER, $CONFNO)";
+            $stmt_addrentals = $ConnectingDB->prepare($query_addrentals);
+            $stmt_addrentals->execute();
 // update the car status
 $query_updatestatus = "UPDATE Vehicle SET STATUS_ID = 'rented' WHERE VID = $Parameter";
 $stmt_updatestatus = $ConnectingDB->prepare($query_updatestatus);
@@ -45,7 +46,7 @@ $stmt_updatestatus->execute();
 <body>
 <p>
     <?php $HOWLONG = $TODATE - $FROMDATE;
-          $LOCATION = $DataRows_selecttype["LOCATION"];
+          $LOCATION = $DataRows_selecttype["LOCATION_ID"];
     ?>
 echo  <?php $DLICENSE ?> <br /> <?php $FROMDATE ?> <br /> <?php $HOWLONG ?> <br /> <?php $VTNAME ?> <br /> <?php $LOCATION ?> <br /> 
 
