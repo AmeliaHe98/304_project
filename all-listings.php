@@ -88,14 +88,14 @@ foreach($results as $result)
           <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a> 
           </div>
           <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vhid=<?php echo htmlentities($result->VTNAME);?>"></h5> 
+            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5> 
             <p class="list-price">$<?php echo htmlentities($result->DRATE);?> Per Day</p>
             <ul>
               <li><?php echo htmlentities($result->HRATE);?> Per Hour</li>
               <li><?php echo htmlentities($result->KRATE);?> Per Kilomerter</li>
               <li><?php echo htmlentities($result->FEATURES);?>Gas Type</li>
             </ul>
-            <a href="vehical-details.php?vhid=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>

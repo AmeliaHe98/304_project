@@ -58,6 +58,7 @@ error_reporting(0);
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
 
 <!--Listing-Image-Slider-->
+
       
       <!--Side-Bar-->
       <!-- <aside class="col-md-3"> -->
@@ -68,7 +69,7 @@ error_reporting(0);
           </div>
 		  <form action="makeReservation.php" method="get">
 			<div class="form-group">
-			  <input type="hidden" class="form-control" name="vtname" value="<?php echo $_GET['vtname'];?>">
+              <input type="hidden" class="form-control" name="vtname" value="<?php echo $_GET['vtname'];?>">
             </div>
             <div class="form-group">
               <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
