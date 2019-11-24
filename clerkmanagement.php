@@ -10,7 +10,7 @@ require_once("DB.php");
 	<body>
 		<div>
         <form class="" action="clerkmanagement.php" method="POST">
-					<input type="text" name="Search" value="" placeholder="Search by vtname/ vid/ status" size = 100><br><br>
+					<input type="text" name="Search" value="" placeholder="Search by vtname/ vlicense/ status" size = 100><br><br>
 					<input type="submit" name="SearchButton" value="Search record">
 				</form>
 		</div>
@@ -40,8 +40,13 @@ require_once("DB.php");
             <?php
             global $ConnectingDB;
             $Search = $_POST["Search"];
-            $query = "SELECT * FROM Vehicle 
-                      WHERE VTNAME = $Search OR VID = $Search OR STATUS_ID = STATUS";
+            if ($Search != null) {
+                $query = "SELECT * FROM Vehicle 
+                      WHERE VTNAME = $Search OR VLICENSE = $Search OR STATUS = $Search";
+            }else{
+                $query = "SELECT * FROM Vehicle";
+            }
+            
             $stmt = $ConnectingDB->prepare($query);
             $stmt->execute();
             while ($DataRows = $stmt->fetch()) {
@@ -52,7 +57,7 @@ require_once("DB.php");
                 $YEAR  = $DataRows["YEAR"];
                 $COLOR = $DataRows["COLOR"];
                  $ODOMETER = $DataRows["ODOMETER"];
-                 $STATUS = $DataRows["STATUS_ID"];
+                 $STATUS = $DataRows["STATUS"];
                  $VTNAME = $DataRows["VTNAME"];
                  $LOCATION = $DataRows["LOCATION_ID"];
                  $CITY  = $DataRows["CITY"];
@@ -69,8 +74,8 @@ require_once("DB.php");
             <td><?php echo $VTNAME;?></td>
             <td><?php echo $LOCATION;?></td>
             <td><?php echo $CITY ;?></td>
-            <td class="RentButton"> <a href="rent.php?id=<?php echo $VID; ?>">Rent</a> </td>
-            <td class="ReturnButton"> <a href="return.php?id=<?php echo $VID; ?>">Return</a></td>
+            <td class="RentButton"> <a href="rent.php?id=<?php echo $VLICENSE; ?>">Rent</a> </td>
+            <td class="ReturnButton"> <a href="return.php?id=<?php echo $VLICENSE; ?>">Return</a></td>
             </tr>
           
              

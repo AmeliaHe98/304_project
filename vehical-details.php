@@ -2,7 +2,6 @@
 session_start();
 include('DB.php');
 error_reporting(0);
-
 ?>
 
 

@@ -3,12 +3,10 @@ require_once("DB.php");
 global $ConnectingDB;
 $Parameter = $_GET["id"];
 
-        // update the car status
-        $query_updatecar = "UPDATE Vehicle SET STATUS_ID = 'rented' WHERE VID = $Parameter";
-        $stmt_updatecar = $ConnectingDB->prepare($query_updatecar);
-        $stmt_updatecar->execute();
-        
-   
+// update the car status
+$query_updatecar = "UPDATE Vehicle SET STATUS = 'available' WHERE VLICENSE = '$Parameter'";
+$stmt_updatecar = $ConnectingDB->prepare($query_updatecar);
+$stmt_updatecar->execute();
 
 ?>
 
@@ -25,7 +23,7 @@ $Parameter = $_GET["id"];
               <br>
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="returnReciept.php?id=<?php echo $_GET["id"];?>" method="post">
+              <form class="" action="returnReciept.php?id=<?php echo $_GET["id"];?>" method="send">
                 <div class="form-group">
                   <label for="DATE_ID"><span class="FieldInfo"><h4>DATE</h4></span></label>
                   <div class="input-group mb-3">

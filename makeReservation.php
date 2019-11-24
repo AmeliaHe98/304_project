@@ -24,16 +24,20 @@ if (isset($_POST["submit"])) {
         $count = $stmt_customer->rowCount();
         if ($count > 0) {
             $confirmationNum = random_int(pow(10, 8), pow(10, 9) - 1);
+            // $date_1 = date('H:i:s', strtotime("$fromTime"));
+            // $formatted_fromTime = $date_1->format('H:i:s');
+            $date_1 = date('H:i:s', strtotime($fromTime));
+            // $formatted = $date_1->format('H:i:s');
+            $date_2 = date('H:i:s', strtotime($toTime));
+            // $formatted_toTime = $date_2->format('H:i:s');
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-            Values ($confirmationNum, $vtname, $dlicense, NULL, NULL, NULL, NULL)";
+            Values ($confirmationNum, '$vtname', $dlicense, $fromDate, '$date_1', $toDate, '$date_2')";
             // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
             $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
              $Execute = $stmt_reservation->execute();
              if ($Execute) {
                           echo "you have reserved this car!";
                         } else {
-                          echo $fromTime;
-                          echo $toTime;
                           echo "insertion fail";
                         }
                       } else {
