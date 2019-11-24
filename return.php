@@ -4,7 +4,7 @@ global $ConnectingDB;
 $Parameter = $_GET["id"];
 
 // update the car status
-$query_updatecar = "UPDATE Vehicle SET STATUS = 'available' WHERE VLICENSE = '$Parameter'";
+$query_updatecar = "UPDATE Vehicle SET STATUS = 'available' WHERE VLICENSE = $Parameter";
 $stmt_updatecar = $ConnectingDB->prepare($query_updatecar);
 $stmt_updatecar->execute();
 
