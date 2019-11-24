@@ -1,8 +1,6 @@
 <?php
-
-$dbServername = "mysql:host=localhost;dbname=carrental";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName = "carrental";
+$DSN='mysql:host=localhost; dbname=carrental';
+$ConnectingDB = new PDO($DSN, 'root', '');
+$conn = $ConnectingDB ;
 
 $ConnectingDB = new PDO($dbServername, $dbUsername, $dbPassword);

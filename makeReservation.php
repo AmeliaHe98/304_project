@@ -4,42 +4,40 @@ require_once("DB.php");
 require_once("all-listings.php");
 if (isset($_POST["submit"])) {
     // empty input
-    if (empty($_POST["cellphone_number"])
+    if (empty($_POST["dlicense"])
     || empty($_POST["name"])) {
         echo "ERROR: HEY! You are entering an invaild customer! <br/>";
     } else{
-        // use includes to send me this information
-        $address = $_POST["address"];
-        $vtname = $_POST["vtname"];
-        $fromDate = $_POST["fromDate"];
-        $fromTime = $_POST["fromTime"];
-        $toDate = $_POST["toDate"];
-        $toTime = $_POST["toTime"];
+      $address = $_POST["address"];
+      $vtname = $_POST["vtname"];
+      $fromDate = $_POST["fromDate"];
+      $fromTime = $_POST["fromTime"];
+      $toDate = $_POST["toDate"];
+      $toTime = $_POST["toTime"];        
         // make reservation successfully
         $dlicense = $_POST["dlicense"];
         $name = $_POST["name"];
+        global $ConnectingDB;
         // there is a customer registered
-        $query_select_customer = "SELECT * FROM Customer Where dlicense =  $dlicense";
-        $result = mysql_query($ConnectingDB, $query_select_customer);
-        if (mysql_num_rows($result) > 0) {
+        $query_select_customer = "SELECT * FROM Customer Where DLICENSE =  $dlicense";
+        $stmt_customer = $ConnectingDB -> query($query_select_customer);
+        $count = $stmt_customer -> rowCount();
+        if ($count > 0) {
             $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
-            $query_insert_reservation = "INSERT INTO Reservation (confNo, vtname, dlicense, fromDate, fromTime, toDate, toTime) 
-                    Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
-                     mysqli_query($ConnectingDB, $query_insert_reservation);
-                     if (mysql_affected_rows == 1) {
-                         //  The database state should reflect this at the end of the action
-                         echo "reservation has made!";
-                         // don't forget to appear confirmation number
-                         mysql_close($ConnectingDB);
-                     } else {
-                         echo "insertion fail";
-                         mysql_close($ConnectingDB
-                        );
-                     }
-        } else {
+            $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
+            Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
+                   // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
+                        $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
+                        $Execute = $stmt_reservation->execute();
+                        if ($Execute) {
+                          echo "We have added you, let's start to make reservation !";
+                        } else {
+                          echo "insertion fail";
+                        }
+                      } else {
             // go to add Customer page
             header("http://localhost:8080/304_project/makeReservation.php");
-        }
+          }
        
     }
         
