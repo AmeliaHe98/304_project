@@ -137,3 +137,114 @@ while ($DataRows_all = $stmt_all->fetch()) {
 </table>
 </div>
 
+<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+<footer id="footer" class="container clearfix">
+		
+		<section class="container clearfix">
+			
+			<div class="four columns">
+
+				<div class="widget-container widget_text">
+
+					<h3 class="widget-title">About Us</h3>
+
+					<div class="textwidget">
+
+						<p class="white">
+							We are a car rental company founded in 2019. 
+							We have a great selection of cars for our customers. 
+							We provide insurance and equpiments with out cars
+						</p>
+
+					</div><!--/ .textwidget-->
+
+				</div><!--/ .widget-container-->	
+
+			</div><!--/ .four .columns-->
+
+			<div class="four columns">
+
+				<div class="widget-container widget_text">
+
+					<h3 class="widget-title">Our Hours</h3>
+
+					<div class="textwidget">
+
+						<ul class="hours">
+
+							<li>Monday <span>8 am to 9 pm</span></li>
+							<li>Tuesday <span>8 am to 9 pm</span></li>
+							<li>Wednesday <span>8 am to 9 pm</span></li>
+							<li>Thursday <span>8 am to 9 pm</span></li>
+							<li>Friday <span>8 am to 9 pm</span></li>
+							<li>Saturday <span>8 am to 9 pm</span></li>
+							<li>Sunday <span>Closed</span></li>
+
+						</ul><!--/ .hours-->
+
+					</div><!--/ .textwidget-->
+
+				</div><!--/ .widget-container-->
+
+			</div><!--/ .four .columns-->
+
+			<div class="four columns">
+
+				<div class="widget-container widget_contacts">
+
+					<h3 class="widget-title">Our Contacts</h3>			
+
+					<ul class="our-contacts">
+
+						<li class="address">
+							<b>Address:</b>
+							<p>2100 Wesbrook Mall</p>
+						</li>
+						<li class="phone">
+							<b>Phone:</b>&nbsp;<span>+1 (778) 000-1111</span> <br />
+						</li>
+						<li>
+							<b>Email: <a href="mailto:customerService@carrental.com">customerService@carrental.com</a></b>
+						</li>
+						<li>
+							<ul class="social-icons clearfix">
+								<li class="twitter"><a title="twitter" href="#">Twitter</a></li>
+								<li class="facebook"><a title="facebook" href="#">Facebook</a></li>
+							</ul><!--/ .social-icons-->
+						</li>
+
+					</ul><!--/ .our-contacts-->
+
+				</div><!--/ .widget-container-->
+
+			</div><!--/ .four .columns-->
+
+			<div class="four columns">
+
+				<div id="gMap" >=</div>
+
+			</div><!--/ .four .columns-->
+
+		</section><!--/ .container-->
+		
+	</footer><!--/ #footer-->
+	
+	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
+  </div><!--/ .wrap-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+<!--[if lt IE 9]>
+	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
+<![endif]-->
+<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="js/jquery.gmap.min.js"></script>
+<script src="js/custom.js"></script>
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+</html>
+
+	
