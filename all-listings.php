@@ -138,53 +138,6 @@ foreach($results as $result)
     </div>
   </div>
 </section>
-
-
-
-		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
-
-		<section class="container py-2 mb-8">
-		<div class="recent-list-cars">
-			<h3 class="widget-title"><span>Available</span> Automobiles</h3>
-			<div class="col-lg-12">
-					<?php
-					global $ConnectingDB;
-					$sql="SELECT * FROM Vehicle"  ;
-					$stmt = $ConnectingDB->query($sql);
-					while($DataRows = $stmt->fetch()){
-						$VID		=$DataRows["VID"];
-						$VLICENSE	=$DataRows["VLICENSE"];
-						$MAKE		=$DataRows["MAKE"];
-						$MODEL		=$DataRows["MODEL"];
-						$YEAR		=$DataRows["YEAR"];
-						$COLOR		=$DataRows["COLOR"];
-						$ODOMETER	=$DataRows["ODOMETER"];
-						$STATUS_ID	=$DataRows["STATUS_ID"];
-						$VTNAME		=$DataRows["VTNAME"];
-						$LOCATION_ID=$DataRows["LOCATION_ID"];
-						$CITY		=$DataRows["CITY"];
-						$GASTYPE_ID	=$DataRows["GASTYPE_ID"];
-						$reserved	=$DataRows["reserved"];
-					?>
-					<ul class="recent-list-cars clearfix">
-						<li>
-								<h3>VEHICLE MODEL <?php echo htmlentities($MODEL); ?></h3>
-								<div class="detailed">
-									<h6>LOCATION <?php echo htmlentities($LOCATION_ID); ?> <br>CITY <?php echo htmlentities($CITY); ?><br>YEAR <?php echo htmlentities($YEAR); ?><br>GASTYPE <?php echo htmlentities($GASTYPE_ID); ?> <br>ODOMETER <?php echo htmlentities($ODOMETER); ?></h6> 
-								</div><!--/ .detailed-->
-								<form action="makeReservation.php?>">
-                    			<input type = "RESERVE" name = "RESERVE" class="button orange" value = "reserve" />
-                    			</form>
-							</li>
-						<?php	} ?>
-						</ul><!--/ .recent-list-cars-->	
-
-			</div>
-		</div>
-
-		</section><!--/.container -->
-
-		<!-- - - - - - - - - - - - - end Container - - - - - - - - - - - - - - - - -->			
 		
 	</div><!--/ .main-->
 
