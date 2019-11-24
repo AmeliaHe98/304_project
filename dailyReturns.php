@@ -138,9 +138,9 @@ while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
 <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 <thead>
 <tr>
-<caption>BY BRANCH</caption>
+<caption>BY COMPANY</caption>
 <th>Revenue</th>
-<th>Count</th>
+<th>AMOUNT</th>
 </tr>
 </thead>
 
