@@ -1,5 +1,39 @@
-<!DOCTYPE html>
-<!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
+<?php 
+session_start();
+include('DB.php');
+error_reporting(0);
+if(isset($_POST['submit']))
+{
+$fromdate=$_POST['fromdate'];
+$todate=$_POST['todate']; 
+$fromtime=$_POST['fromtime'];
+$totime=$_POST['totime']; 
+$vtname=$_GET['vtname'];
+$sql="INSERT INTO  Reservation(VTNAME,TOTIME,FROMDATE,TODATE, FROMTIME) VALUES(:vtname,:totime :fromdate,:todate,:fromtime,)";
+$query = $ConnectingDB->prepare($sql);
+$query->bindParam(':vtname',$vtname,PDO::PARAM_STR);
+$query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
+$query->bindParam(':todate',$todate,PDO::PARAM_STR);
+$query->bindParam(':fromtime',$fromtime,PDO::PARAM_STR);
+$query->bindParam(':totime',$totime,PDO::PARAM_STR);
+$query->execute();
+$lastInsertId = $ConnectingDB->lastInsertId();
+if($lastInsertId)
+{
+echo "<script>alert('Booking successfull.');</script>";
+}
+else 
+{
+echo "<script>alert('Something went wrong. Please try again');</script>";
+}
+
+}
+
+?>
+
+
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
 	<meta charset="utf-8" />
@@ -15,11 +49,11 @@
 
 	<!-- HTML5 Shiv + detect touch events -->
 	<script type="text/javascript" src="js/modernizr.custom.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body class="menu-1 h-style-1 text-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
 
-<div class="wrap">
-	
+
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
 	<header id="header" class="clearfix">
@@ -29,8 +63,8 @@
 		<nav id="navigation" class="navigation">
 			
 			<ul>
-				<li class="current-menu-item"><a href="index.html">Home</a></li>
-				<li><a href="all-listings.php">Browse All</a></li>
+				<li><a href="index.html">Home</a></li>
+				<li class="current-menu-item"><a href="all-listings.html">Browse All</a></li>
 				<li><a href="sales-reps.html">Clerks Action</a></li>
 			</ul>
 			
@@ -39,123 +73,79 @@
 	</header><!--/ #header-->
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+
+<!--Listing-Image-Slider-->
+
+<?php 
+$vlicense=$_GET['vlicense'];
+$sql = "SELECT * from Vehicle where Vehicle.VLICENSE=:vlicense";
+$query = $ConnectingDB -> prepare($sql);
+$query->bindParam(':vlicense',$vlicense, PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{  
+  $_SESSION['brndid']=$result;  
+?>  
+
+
+<!--Listing-detail-->
+        <h2><?php echo htmlentities($result->MAKE);?> , <?php echo htmlentities($result->MODEL);?></h2>
+          <p>$<?php echo htmlentities($result->COLOR);?> </p>Car color:
+          <h5><?php echo htmlentities($result->YEAR);?></h5>
+          <h5><?php echo htmlentities($result->Features);?></h5>
+
+<?php }} ?>
+   
+
+      
+      <!--Side-Bar-->
+      <aside class="col-md-3">
+      
+        <div class="sidebar_widget">
+          <div class="widget_heading">
+            <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
+          </div>
+          <form method="post">
+            <div class="form-group">
+              <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="fromtime" placeholder="From Time" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="totime" placeholder="To Time" required>
+            </div>
+          <?php if($_SESSION['login'])
+              {?>
+              <div class="form-group">
+                <input type="submit" class="btn"  name="submit" value="Book Now">
+              </div>
+              <?php } else { ?>
+<a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
+
+              <?php } ?>
+          </form>
+        </div>
+      </aside>
+      <!--/Side-Bar--> 
+    </div>
+    
+    <div class="space-20"></div>
+    <div class="divider"></div>
+    
+    
+  </div>
+</section>
+<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
-	
-	<!-- - - - - - - - - - - - - - Top Panel - - - - - - - - - - - - - - - - -->	
-	
-	<div class="top-panel clearfix">
-		
-		<!-- - - - - - - - - - - Slider - - - - - - - - - - - - - -->	
-
-		<div id="slider" class="flexslider clearfix">
-
-			<ul class="slides">
-
-				<li>
-					<img src="images/sliders/slide-1.jpg" alt="" />
-
-					<div class="caption">
-						<div class="caption-entry">
-
-							<dl class="auto-detailed clearfix">
-								<dt><span class="model">2005 Shevrolet</span></dt>
-								<dd class="media-hidden"><b>1.8 XRS Sedan</b></dd>
-								<dd class="media-hidden"><b>36000 Miles</b></dd>
-								<dd><span class="heading">$25896</span></dd>
-							</dl><!--/ .auto-detailed-->
-
-							<a href="#" class="button orange">RESERVE &raquo;</a>
-
-						</div><!--/ .caption-entry-->
-					</div><!--/ .caption-->
-				</li>
-				<li>
-					<img src="images/sliders/slide-2.jpg" alt="" />
-
-					<div class="caption">
-						<div class="caption-entry">
-
-							<dl class="auto-detailed clearfix">
-								<dt><span class="model">2012 BMW</span></dt>
-								<dd class="media-hidden"><b>1.8 XRS Sedan</b></dd>
-								<dd class="media-hidden"><b>36000 Miles</b></dd>
-								<dd><span class="heading">$25896</span></dd>
-							</dl><!--/ .auto-detailed-->
-
-							<a href="#" class="button orange">RESERVE &raquo;</a>
-
-						</div><!--/ .caption-entry-->
-					</div><!--/ .caption-->
-				</li>
-				<li>
-					<img src="images/sliders/slide-3.jpg" alt="" />
-
-					<div class="caption">
-						<div class="caption-entry">
-
-							<dl class="auto-detailed clearfix">
-								<dt><span class="model">2010 Subaru</span></dt>
-								<dd class="media-hidden"><b>1.8 XRS Sedan</b></dd>
-								<dd class="media-hidden"><b>36000 Miles</b></dd>
-								<dd><span class="heading">$25896</span></dd>
-							</dl><!--/ .auto-detailed-->
-
-							<a href="#" class="button orange">RESERVE &raquo;</a>
-
-						</div><!--/ .caption-entry-->
-					</div><!--/ .caption-->
-				</li>
-				<li>
-					<img src="images/sliders/slide-4.jpg" alt="" />
-
-					<div class="caption">
-						<div class="caption-entry">
-
-							<dl class="auto-detailed clearfix">
-								<dt><span class="model">2005 Honda</span></dt>
-								<dd class="media-hidden"><b>1.8 XRS Sedan</b></dd>
-								<dd class="media-hidden"><b>36000 Miles</b></dd>
-								<dd><span class="heading">$25896</span></dd>
-							</dl><!--/ .auto-detailed-->
-
-							<a href="#" class="button orange">RESERVE &raquo;</a>
-
-						</div><!--/ .caption-entry-->
-					</div><!--/ .caption-->
-				</li>
-				<li>
-					<img src="images/sliders/slide-5.jpg" alt="" />
-
-					<div class="caption">
-						<div class="caption-entry">
-
-							<dl class="auto-detailed clearfix">
-								<dt><span class="model">2005 Honda</span></dt>
-								<dd class="media-hidden"><b>1.8 XRS Sedan</b></dd>
-								<dd class="media-hidden"><b>36000 Miles</b></dd>
-								<dd><span class="heading">$25896</span></dd>
-							</dl><!--/ .auto-detailed-->
-
-							<a href="#" class="button orange">RESERVE &raquo;</a>
-
-						</div><!--/ .caption-entry-->
-					</div><!--/ .caption-->
-				</li>
-
-			</ul><!--/ .slides-->
-
-		</div><!--/ #slider-->
-
-		<!-- - - - - - - - - - - end Slider - - - - - - - - - - - - - -->
-		
-	</div><!--/ .top-panel-->
-	
-	<!-- - - - - - - - - - - - - end Top Panel - - - - - - - - - - - - - - - -->	
-
-	
-	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
-	
-	<footer id="footer" class="container clearfix">
+<footer id="footer" class="container clearfix">
 		
 		<section class="container clearfix">
 			
@@ -247,8 +237,7 @@
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-	
-</div><!--/ .wrap-->
+  </div><!--/ .wrap-->
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -263,3 +252,4 @@
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
+E
