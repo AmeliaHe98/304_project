@@ -2,32 +2,6 @@
 session_start();
 include('DB.php');
 error_reporting(0);
-if(isset($_POST['submit']))
-{
-$fromdate=$_POST['fromdate'];
-$todate=$_POST['todate']; 
-$fromtime=$_POST['fromtime'];
-$totime=$_POST['totime']; 
-$vtname=$_POST['vtname'];
-$sql="INSERT INTO  Reservation(VTNAME,TOTIME,FROMDATE,TODATE, FROMTIME) VALUES(:vtname,:totime :fromdate,:todate,:fromtime,)";
-$query = $ConnectingDB->prepare($sql);
-$query->bindParam(':vtname',$vtname,PDO::PARAM_STR);
-$query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
-$query->bindParam(':todate',$todate,PDO::PARAM_STR);
-$query->bindParam(':fromtime',$fromtime,PDO::PARAM_STR);
-$query->bindParam(':totime',$totime,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $ConnectingDB->lastInsertId();
-if($lastInsertId)
-{
-echo "<script>alert('Booking successfull.');</script>";
-}
-else 
-{
-echo "<script>alert('Something went wrong. Please try again');</script>";
-}
-
-}
 
 ?>
 
@@ -84,60 +58,35 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
 
 <!--Listing-Image-Slider-->
-
-<?php 
-$vtname=$_GET['vtname'];
-$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname";
-$query = $ConnectingDB -> prepare($sql);
-$query->bindParam(':vtname',$vtname, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{  
-  $_SESSION['brndid']=$result;  
-?>  
-
-
-<!--Listing-detail-->
-        <h2><?php echo htmlentities($result->VTNAME);?></h2>
-          <p><?php echo htmlentities($result->LOCATION_ID);?>, <?php echo htmlentities($result->CITY);?> </p>
-
-<?php }} ?>
-   
-
       
       <!--Side-Bar-->
-      <aside class="col-md-3">
+      <!-- <aside class="col-md-3"> -->
       
-        <div class="sidebar_widget">
+        <!-- <div class="sidebar_widget"> -->
           <div class="widget_heading">
             <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
           </div>
-          <form method="post">
-            <div class="form-group">
-              <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+		  <form action="makeReservation.php" method="get">
+			<div class="form-group">
+			  <input type="hidden" class="form-control" name="vtname" value="<?php echo $_GET['vtname'];?>">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+              <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="fromtime" placeholder="From Time" required>
+              <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="totime" placeholder="To Time" required>
+              <input type="time" class="form-control" name="fromtime" placeholder="From Time" required>
             </div>
-          <?php if($_SESSION['login'])
-              {?>
-              <div class="form-group">
-                <input type="submit" class="btn"  name="submit" value="Book Now">
-              </div>
-              <?php } else { ?>
-<a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
+            <div class="form-group">
+              <input type="time" class="form-control" name="totime" placeholder="To Time" required>
+			</div>
 
-              <?php } ?>
+         <div class="form-group">
+                <input type="submit" name="book" value="Book Now">
+              </div>
+     </form>
           </form>
         </div>
       </aside>

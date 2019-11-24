@@ -96,7 +96,7 @@ foreach($results as $result)
               <li><?php echo htmlentities($result->LOCATION_ID);?></li>
               <li><?php echo htmlentities($result->CITY);?></li>
             </ul>
-            <a href="vehical-details.php?vtame=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>
@@ -109,7 +109,7 @@ foreach($results as $result)
             <h5></i> Find Your Car </h5>
           </div>
           <div class="sidebar_filter">
-            <form action="search-carresult.php" method="post">
+            <form action="search-carresult.php" method="get">
               <div class="form-group select">
                 <select class="form-control" name="vtname">
 				  <option>Select Vehicle Type</option>
