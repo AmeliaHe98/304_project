@@ -77,10 +77,10 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 <!--Listing-Image-Slider-->
 
 <?php 
-$vtname=intval($_GET['vtname']);
-$sql = "SELECT * from Vehicle";
+$vlicense=$_GET['vlicense'];
+$sql = "SELECT * from Vehicle where Vehicle.VLICENSE=:vlicense";
 $query = $ConnectingDB -> prepare($sql);
-$query->bindParam(':vtname',$vtname, PDO::PARAM_STR);
+$query->bindParam(':vlicense',$vlicense, PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
@@ -115,6 +115,12 @@ foreach($results as $result)
             </div>
             <div class="form-group">
               <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="fromtime" placeholder="From Time" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="totime" placeholder="To Time" required>
             </div>
           <?php if($_SESSION['login'])
               {?>

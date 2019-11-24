@@ -79,13 +79,13 @@ foreach($results as $result)
 {  ?>
         <div class="product-listing-m gray-bg">
           <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vhid=<?php echo htmlentities($result->VLICENSE);?>"><?php echo htmlentities($result->MAKE);?> , <?php echo htmlentities($result->MODEL);?></a></h5>
+            <h5><a href="vehical-details.php?vilcense=<?php echo htmlentities($result->VLICENSE);?>"></a></h5>
             <p class="list-price"><?php echo htmlentities($result->ODOMETER);?> Miles Already Travelled</p>
             <ul>
               <li><?php echo htmlentities($result->COLOR);?> Color</li>
               <li><?php echo htmlentities($result->YEAR);?> Year</li>
             </ul>
-            <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vilcense=<?php echo htmlentities($result->VLICENSE);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>
