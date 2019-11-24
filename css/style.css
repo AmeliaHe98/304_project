@@ -410,16 +410,6 @@ h6 {line-height: 1.5em;}
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#595959', endColorstr='#3b3b3b',GradientType=0 ); /* IE6-9 */
 	}
 	
-	.menu-2 .navigation {
-		background: -moz-linear-gradient(top,  #ffffff 0%, #ececec 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* IE10+ */
-		background: linear-gradient(to bottom,  #ffffff 0%,#ececec 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ececec',GradientType=0 ); /* IE6-9 */
-	}
-	
 		.navigation > ul > li {
 			position: relative;
 			float: left;
@@ -430,7 +420,7 @@ h6 {line-height: 1.5em;}
 			.navigation > ul > li > a {
 				position: relative;
 				display: block;
-				padding: 0 20px;
+				padding: 0 60px;
 				border-right-width: 1px;
 				border-right-style: solid;
 				vertical-align: top;
@@ -442,9 +432,6 @@ h6 {line-height: 1.5em;}
 			
 			.menu-1 .navigation > ul > li > a,
 			.menu-1 .navigation {border-color: #2b2a2a; color: #fbfafa;}
-			
-			.menu-2 .navigation > ul > li > a,
-			.menu-2 .navigation {border-color: #d7d7d7; color: #585757;}
 
 				.navigation > ul > li:hover > a,
 				.navigation > ul > li.current-menu-item > a {color: #fe5214;}
@@ -461,19 +448,6 @@ h6 {line-height: 1.5em;}
 					background: -ms-linear-gradient(top,  #4c4c4c 0%,#323232 100%); /* IE10+ */
 					background: linear-gradient(to bottom,  #4c4c4c 0%,#323232 100%); /* W3C */
 					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#323232',GradientType=0 ); /* IE6-9 */
-				}
-
-				.menu-2 .navigation > ul > li:hover > a,
-				.menu-2 .navigation > ul > li.current-menu-item > a,
-				.menu-2 .navigation > ul > li.current-menu-parent > a,
-				.menu-2 .navigation > ul > li.current-menu-ancestor > a {
-					background: -moz-linear-gradient(top,  #f9f9f9 0%, #e6e6e6 100%); /* FF3.6+ */
-					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#e6e6e6)); /* Chrome,Safari4+ */
-					background: -webkit-linear-gradient(top,  #f9f9f9 0%,#e6e6e6 100%); /* Chrome10+,Safari5.1+ */
-					background: -o-linear-gradient(top,  #f9f9f9 0%,#e6e6e6 100%); /* Opera 11.10+ */
-					background: -ms-linear-gradient(top,  #f9f9f9 0%,#e6e6e6 100%); /* IE10+ */
-					background: linear-gradient(to bottom,  #f9f9f9 0%,#e6e6e6 100%); /* W3C */
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
 				}
 				
 				.navigation > ul > li:first-child:hover > a,
@@ -552,33 +526,10 @@ h6 {line-height: 1.5em;}
 						border-color: #424242;
 					}
 					
-					.menu-2 .navigation ul ul a {
-						border-color: #d7d7d7;
-					}
-					
-					.navigation .rightarrowclass {
-						position: absolute;
-						top: 50%;
-						right: 4px;
-						margin-top: -2px;
-						width: 3px;
-						height: 5px;
-						background: url(../images/rightarrowclass.png) no-repeat;
-					}
-					
 					.menu-1 .navigation > ul ul li:hover > a,
 					.menu-1 .navigation ul ul li.current-menu-item > a,
 					.menu-1 .navigation ul ul li.current-menu-parent > a,
 					.menu-1 .navigation ul ul li.current-menu-ancestor > a {color: #fff;}
-					
-					.menu-2 .navigation > ul ul li:hover > a,
-					.menu-2 .navigation ul ul li.current-menu-item > a,
-					.menu-2 .navigation ul ul li.current-menu-parent > a,
-					.menu-2 .navigation ul ul li.current-menu-ancestor > a {color: #585757;}
-					
-					.menu-1 .navigation > ul ul li:hover .rightarrowclass {background-position: 0 -15px;}
-					.menu-2 .navigation > ul ul li:hover .rightarrowclass {background-position: 0 -75px;}
-
 
 			/* Sub Dropdown */
 
@@ -611,11 +562,10 @@ h6 {line-height: 1.5em;}
 	.navigation .nav-responsive {
 		display: none;
 		margin: 15px 20px;
-		padding: 4px 8px;
-		width: 90%;
+
+		width: 100%;
 		border-color: #fff;
 		background-color: #fff;
-		background-image: url(../images/nav-bg.png);
 		background-position: right center;
 		background-repeat: no-repeat;
 	}
