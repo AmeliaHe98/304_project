@@ -14,22 +14,28 @@
 <link rel="stylesheet" href="css/skeleton.css" media="screen" />
 <link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 <link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<!--Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<!--OWL Carousel slider-->
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<!--slick-slider -->
 <link href="css/slick.css" rel="stylesheet">
+<!--bootstrap-slider -->
 <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<!--FontAwesome Font Style -->
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<!-- HTML5 Shiv + detect touch events -->
 <script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-
-
+	
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
 	<header id="header" class="clearfix">
@@ -49,37 +55,67 @@
 	</header><!--/ #header-->
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+<!--Listing-->
+<section class="listing-page">
 
-<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+      
+<!--Side-Bar-->
+<div class="container">
+<div class="row">
+<div class="col-md-9 col-md-push-0">
+        <div class="sidebar_widget">
+          <div class="widget_heading">
+            <h5></i> Find Your Branch Report </h5>
+          </div>
+          <div class="sidebar_filter">
+            <form action="dailyRentalsByBranch.php" method="get">
+				<div class="form-group select">
+                <select class="form-control" name="location_id">
+					<option>Select Location</option>
+					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+				<div class="form-group select">
+                <select class="form-control" name="city">
+					<option>Select City</option>
+					<?php $sql = "SELECT distinct CITY FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->CITY);?>"><?php echo htmlentities($result->CITY);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+			
+				<div class="form-group">
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Rent Report By Branch</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</aside>
+      <!--/Side-Bar--> 
+    </div>
+  </div>
+</section>
 
-<section class="container content clearfix">
-    
-    <div class="box-toggle">
-        
-        <span class="trigger"> <h2>Select the report you want to view !</h2></span>
-        <div class="toggle-container">
-					<p>
-                    <a href="dailyRentals.php">Daily Rentals
-                    </p>
-                    <p>
-                    <a href="all-rent-reports.php">Daily Rentals per Branch
-                    </p>
-                    <p>
-                    <a href="dailyReturns.php">Daily Returns
-                    </p>
-                    <p>
-                    <a href="all-return-reports.php.php">Daily Returns per Branch
-					</p>
-</div><!--/ .toggle-container--> 
-</div>
-    
-</section><!--/.container -->
-
-<!-- - - - - - - - - - - - - end Container - - - - - - - - - - - - - - - - -->		
-
-<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
-<footer id="footer" class="container clearfix">
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+	<footer id="footer" class="container clearfix">
 		
 		<section class="container clearfix">
 			
@@ -166,25 +202,21 @@
 
 			</div><!--/ .four .columns-->
 
-		</section><!--/ .container-->
 		
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-  </div><!--/ .wrap-->
-
+	
+</div><!--/ .wrap-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
 	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
-<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="js/jquery.gmap.min.js"></script>
 <script src="js/custom.js"></script>
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
-
-	

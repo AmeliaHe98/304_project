@@ -14,22 +14,28 @@
 <link rel="stylesheet" href="css/skeleton.css" media="screen" />
 <link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 <link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<!--Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<!--OWL Carousel slider-->
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<!--slick-slider -->
 <link href="css/slick.css" rel="stylesheet">
+<!--bootstrap-slider -->
 <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<!--FontAwesome Font Style -->
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<!-- HTML5 Shiv + detect touch events -->
 <script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-
-
+	
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
 	<header id="header" class="clearfix">
@@ -40,8 +46,8 @@
 			
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li><a href="all-listings.php">Browse All</a></li>
-				<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
+				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
+				<li><a href="reportGenerator.php">Clerks Action</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
@@ -49,37 +55,107 @@
 	</header><!--/ #header-->
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
-
-<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
-
-<section class="container content clearfix">
-    
-    <div class="box-toggle">
-        
-        <span class="trigger"> <h2>Select the report you want to view !</h2></span>
-        <div class="toggle-container">
-					<p>
-                    <a href="dailyRentals.php">Daily Rentals
-                    </p>
-                    <p>
-                    <a href="all-rent-reports.php">Daily Rentals per Branch
-                    </p>
-                    <p>
-                    <a href="dailyReturns.php">Daily Returns
-                    </p>
-                    <p>
-                    <a href="all-return-reports.php.php">Daily Returns per Branch
-					</p>
-</div><!--/ .toggle-container--> 
+<!--Listing-->
+<section class="listing-page">
+<div class="container">
+<div class="row">
+<div class="col-md-9 col-md-push-3">
+<div class="result-sorting-wrapper">
+<div class="sorting-count">
+<?php 
+//Query for Listing count
+$sql = "SELECT * from Vehicle";
+$query = $ConnectingDB -> prepare($sql);
+$query->bindParam(':VID',$VID, PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=$query->rowCount();
+?>
+<p><span><?php echo htmlentities($cnt);?> Listings</span></p>
 </div>
-    
-</section><!--/.container -->
+</div>
 
-<!-- - - - - - - - - - - - - end Container - - - - - - - - - - - - - - - - -->		
+<?php $sql = "SELECT Vehicle.*,VehicleType.* from Vehicle, VehicleType where Vehicle.VTNAME=VehicleType.VTNAME";
+$query = $ConnectingDB -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{  ?>
+        <div class="product-listing-m gray-bg">
+          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a> 
+          </div>
+          <div class="product-listing-content">
+            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5> 
+            <p class="list-price">$<?php echo htmlentities($result->DRATE);?> Per Day</p>
+            <ul>
+              <li><?php echo htmlentities($result->HRATE);?> Per Hour</li>
+              <li><?php echo htmlentities($result->KRATE);?> Per Kilomerter</li>
+              <li><?php echo htmlentities($result->FEATURES);?>Gas Type</li>
+            </ul>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+          </div>
+        </div>
+      <?php }} ?>
+         </div>
+      
+<!--Side-Bar-->
+<aside class="col-md-3 col-md-pull-9">
+        <div class="sidebar_widget">
+          <div class="widget_heading">
+            <h5></i> Find Your Car </h5>
+          </div>
+          <div class="sidebar_filter">
+            <form action="search-carresult.php" method="post">
+              <div class="form-group select">
+                <select class="form-control" name="vtname">
+				  <option>Select Vehicle Type</option>
+				  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
+				  $query = $ConnectingDB -> prepare($sql);
+				  $query->execute();
+				  $results=$query->fetchAll(PDO::FETCH_OBJ);
+				  $cnt=1;
+				  if($query->rowCount() > 0){
+					  foreach($results as $result)
+					  {       ?>  
+					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
+					  <?php }} ?>
+					</select>
+				</div>
+				<div class="form-group select">
+                <select class="form-control" name="location_id">
+					<option>Select Location Type</option>
+					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+			
+				<div class="form-group">
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</aside>
+      <!--/Side-Bar--> 
+    </div>
+  </div>
+</section>
 
-<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
-<footer id="footer" class="container clearfix">
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+	<footer id="footer" class="container clearfix">
 		
 		<section class="container clearfix">
 			
@@ -171,20 +247,17 @@
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-  </div><!--/ .wrap-->
-
+	
+</div><!--/ .wrap-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
 	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
-<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="js/jquery.gmap.min.js"></script>
 <script src="js/custom.js"></script>
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
-
-	
