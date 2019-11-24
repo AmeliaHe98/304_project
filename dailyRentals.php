@@ -30,214 +30,234 @@
 <div class="wrap">
 
 
-	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
-	
-	<header id="header" class="clearfix">
-		
-		<a href="index.html" id="logo"><img src="images/logo.png" alt="Car Rental" /></a>
-	
-		<nav id="navigation" class="navigation">
-			
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
-			</ul>
-			
-		</nav><!--/ #navigation-->
-		
-	</header><!--/ #header-->
-	
-	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 
+<header id="header" class="clearfix">
+
+<a href="index.html" id="logo"><img src="images/logo.png" alt="Car Rental" /></a>
+
+<nav id="navigation" class="navigation">
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
+<li><a href="reportGenerator.php">Clerks Action</a></li>
+</ul>
+
+</nav><!--/ #navigation-->
+
+</header><!--/ #header-->
+
+<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+
+<body>
+<?php 
+date_default_timezone_set('America/Vancouver');
+$current_date = date('d/m/Y');
+?>
+
+<h2 class="page-title">Manage Rentals</h2>
 <!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
-<div>
-                 <table width="1000">
-                 <caption>BY CATEGORY</caption>
-			<tr>
-				<th>Vehicle Type</th>
-				<th>Count</th>
-            </tr>
-        
-<?php
-while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
-    $VTNAME = $DataRows_bycategory["VTNAME"];
-    $COUNT_EACH_CATEGORY = $DataRows_bycategory["AMOUNT"];
-    ?>
-
-    <tr>
-    <td><?php echo $VTNAME; ?> </td>
-    <td><?php echo $COUNT_EACH_CATEGORY; ?> </td>
-    </tr>
-    <?php } ?>
-
-</table>
-</div>
-<br><br><br>
+<div class="panel panel-default">
+<div class="panel-heading"><b>Daily Rental of <?php echo $current_date ?></b>
+<!-- - - - - - - - - - - - - - - BY CATEGORY - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY CATEGORY</caption>
+<th>Vehicle Type</th>
+<th>Count</th>
+</tr>
+</thead>
 
 <?php
 
 // display the number of vehicles rented at each branch
+$query_bycategory = "SELECT Vehicle.VTNAME, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = $current_date GROUP BY Vehicle.VTNAME";
+$stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
+$stmt_bycategory->execute();
+while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
+$VTNAME = $DataRows_bycategory["VTNAME"];
+$COUNT_EACH_CATEGORY = $DataRows_bycategory["AMOUNT"];
+?>
+<tr>
+<td><?php echo $VTNAME ; ?> </td>
+<td><?php echo $COUNT_EACH_CATEGORY; ?> </td>
+</tr>
+
+<?php } ?>
+
+</table>
+</div>
+<!-- - - - - - - - - - - - - - - BY CATEGORY - - - - - - - - - - - - - - - - -->	
+<!-- - - - - - - - - - - - - - - BY BRANCH - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY BRANCH</caption>
+<th>CITY</th>
+<th>LOCATION</th>
+<th>Count</th>
+</tr>
+</thead>
+
+<?php
 $query_bybranch = "SELECT Vehicle.LOCATION_ID, Vehicle.CITY, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
 WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = $current_date GROUP BY Vehicle.LOCATION_ID, Vehicle.CITY";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
 $stmt_bybranch->execute();
-?>
-<div>
-                 <table width="1000">
-                 <caption>BY BRANCH</caption>
-			<tr>
-				<th>Location</th>
-                <th>City</th>
-				<th>Count</th>
-            </tr>
-        
-<?php
 while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
-    $LOCATION = $DataRows_bybranch["LOCATION_ID"];
-    $CITY = $DataRows_bybranch["CITY"];
-    $COUNT_EACH_BRANCH = $DataRows_bybranch["AMOUNT"];
-    ?>
+$LOCATION = $DataRows_bybranch["LOCATION_ID"];
+$CITY = $DataRows_bybranch["CITY"];
+$COUNT_EACH_BRANCH = $DataRows_bybranch["AMOUNT"];
+?>
 
-    <tr>
-    <td><?php echo $LOCATION ; ?> </td>
-    <td><?php echo $CITY ; ?> </td>
-    <td><?php echo $COUNT_EACH_BRANCH; ?> </td>
-    </tr>
-    <?php } ?>
+<tr>
+<td><?php echo $LOCATION ; ?> </td>
+<td><?php echo $CITY ; ?> </td>
+<td><?php echo $COUNT_EACH_BRANCH; ?> </td>
+</tr>
+
+<?php } ?>
 
 </table>
 </div>
-<br><br><br>
+<!-- - - - - - - - - - - - - - - BY BRANCH - - - - - - - - - - - - - - - - -->	
+<!-- - - - - - - - - - - - - - - BY COMPANY - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY COMPANY</caption>
+<th>Count All</th>
+</tr>
+</thead>
 
 <?php
-// display the number of new rentals across the whole company
 $query_all = "SELECT COUNT(*) AS AMOUNT FROM Rentals 
 WHERE Rentals.FROMDATE = $current_date";
 $stmt_all = $ConnectingDB->prepare($query_all);
 $stmt_all->execute();
-?>
-<div>
-                 <table width="1000">
-                 <caption>COMPANY</caption>
-			<tr>
-				<th>Count</th>
-            </tr>
-        
-<?php
 while ($DataRows_all = $stmt_all->fetch()) {
     $COUNT_ALL = $DataRows_all["AMOUNT"];
-    ?>
+?>
 
-    <tr>
-    <td><?php echo $COUNT_ALL; ?> </td>
-    </tr>
-    <?php } ?>
+<tr>
+<td><?php echo $COUNT_ALL ; ?> </td>
+</tr>
+
+<?php } ?>
 
 </table>
 </div>
-
+<!-- - - - - - - - - - - - - - - BY COMPANY - - - - - - - - - - - - - - - - -->	
+</div>
+</div>
+<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
 <!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
-	
+
 <footer id="footer" class="container clearfix">
-		
-		<section class="container clearfix">
-			
-			<div class="four columns">
 
-				<div class="widget-container widget_text">
+<section class="container clearfix">
 
-					<h3 class="widget-title">About Us</h3>
+<div class="four columns">
 
-					<div class="textwidget">
+<div class="widget-container widget_text">
 
-						<p class="white">
-							We are a car rental company founded in 2019. 
-							We have a great selection of cars for our customers. 
-							We provide insurance and equpiments with out cars
-						</p>
+<h3 class="widget-title">About Us</h3>
 
-					</div><!--/ .textwidget-->
+<div class="textwidget">
 
-				</div><!--/ .widget-container-->	
+<p class="white">
+We are a car rental company founded in 2019. 
+We have a great selection of cars for our customers. 
+We provide insurance and equpiments with out cars
+</p>
 
-			</div><!--/ .four .columns-->
+</div><!--/ .textwidget-->
 
-			<div class="four columns">
+</div><!--/ .widget-container-->	
 
-				<div class="widget-container widget_text">
+</div><!--/ .four .columns-->
 
-					<h3 class="widget-title">Our Hours</h3>
+<div class="four columns">
 
-					<div class="textwidget">
+<div class="widget-container widget_text">
 
-						<ul class="hours">
+<h3 class="widget-title">Our Hours</h3>
 
-							<li>Monday <span>8 am to 9 pm</span></li>
-							<li>Tuesday <span>8 am to 9 pm</span></li>
-							<li>Wednesday <span>8 am to 9 pm</span></li>
-							<li>Thursday <span>8 am to 9 pm</span></li>
-							<li>Friday <span>8 am to 9 pm</span></li>
-							<li>Saturday <span>8 am to 9 pm</span></li>
-							<li>Sunday <span>Closed</span></li>
+<div class="textwidget">
 
-						</ul><!--/ .hours-->
+<ul class="hours">
 
-					</div><!--/ .textwidget-->
+<li>Monday <span>8 am to 9 pm</span></li>
+<li>Tuesday <span>8 am to 9 pm</span></li>
+<li>Wednesday <span>8 am to 9 pm</span></li>
+<li>Thursday <span>8 am to 9 pm</span></li>
+<li>Friday <span>8 am to 9 pm</span></li>
+<li>Saturday <span>8 am to 9 pm</span></li>
+<li>Sunday <span>Closed</span></li>
 
-				</div><!--/ .widget-container-->
+</ul><!--/ .hours-->
 
-			</div><!--/ .four .columns-->
+</div><!--/ .textwidget-->
 
-			<div class="four columns">
+</div><!--/ .widget-container-->
 
-				<div class="widget-container widget_contacts">
+</div><!--/ .four .columns-->
 
-					<h3 class="widget-title">Our Contacts</h3>			
+<div class="four columns">
 
-					<ul class="our-contacts">
+<div class="widget-container widget_contacts">
 
-						<li class="address">
-							<b>Address:</b>
-							<p>2100 Wesbrook Mall</p>
-						</li>
-						<li class="phone">
-							<b>Phone:</b>&nbsp;<span>+1 (778) 000-1111</span> <br />
-						</li>
-						<li>
-							<b>Email: <a href="mailto:customerService@carrental.com">customerService@carrental.com</a></b>
-						</li>
-						<li>
-							<ul class="social-icons clearfix">
-								<li class="twitter"><a title="twitter" href="#">Twitter</a></li>
-								<li class="facebook"><a title="facebook" href="#">Facebook</a></li>
-							</ul><!--/ .social-icons-->
-						</li>
+<h3 class="widget-title">Our Contacts</h3>			
 
-					</ul><!--/ .our-contacts-->
+<ul class="our-contacts">
 
-				</div><!--/ .widget-container-->
+<li class="address">
+<b>Address:</b>
+<p>2100 Wesbrook Mall</p>
+</li>
+<li class="phone">
+<b>Phone:</b>&nbsp;<span>+1 (778) 000-1111</span> <br />
+</li>
+<li>
+<b>Email: <a href="mailto:customerService@carrental.com">customerService@carrental.com</a></b>
+</li>
+<li>
+<ul class="social-icons clearfix">
+<li class="twitter"><a title="twitter" href="#">Twitter</a></li>
+<li class="facebook"><a title="facebook" href="#">Facebook</a></li>
+</ul><!--/ .social-icons-->
+</li>
 
-			</div><!--/ .four .columns-->
+</ul><!--/ .our-contacts-->
 
-			<div class="four columns">
+</div><!--/ .widget-container-->
 
-				<div id="gMap" >=</div>
+</div><!--/ .four .columns-->
 
-			</div><!--/ .four .columns-->
+<div class="four columns">
 
-		</section><!--/ .container-->
-		
-	</footer><!--/ #footer-->
-	
-	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-  </div><!--/ .wrap-->
+<div id="gMap" >=</div>
+
+</div><!--/ .four .columns-->
+
+</section><!--/ .container-->
+
+</footer><!--/ #footer-->
+
+<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
+</div><!--/ .wrap-->
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
-	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
+<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
 <script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -247,4 +267,4 @@ while ($DataRows_all = $stmt_all->fetch()) {
 </body>
 </html>
 
-	
+
