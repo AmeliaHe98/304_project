@@ -4,7 +4,7 @@ $Parameter = $_GET["id"];
 // echo $parameter;
 // get cartype according to VLICENSE from car
 $query_selecttype = "SELECT * FROM Vehicle 
-                      WHERE VLICENSE = '$Parameter'";
+                      WHERE VLICENSE = $Parameter";
 $stmt_selecttype = $ConnectingDB->prepare($query_selecttype);
 $stmt_selecttype->execute();
 $DataRows_selecttype = $stmt_selecttype->fetch();
@@ -54,7 +54,7 @@ $query_addrentals = "INSERT INTO Renatls (RID, VLICENSE, DLICENSE, FROMDATE, FRO
                 echo 888;
             }
 // update the car status
-$query_updatestatus = "UPDATE Vehicle SET STATUS = 'rented' WHERE VLICENSE = '$Parameter'";
+$query_updatestatus = "UPDATE Vehicle SET STATUS = 'rented' WHERE VLICENSE = $Parameter";
 $stmt_updatestatus = $ConnectingDB->prepare($query_updatestatus);
 $Execute_b = $stmt_updatestatus->execute();
 if ($Execute_b) {
@@ -78,7 +78,7 @@ if ($Execute_b) {
     ?>
 <?php echo $DLICENSE; echo $FROMDATE;
 // echo $TODATE;
-  echo $HOWLONG_stirng; echo $VTNAME; echo $LOCATION; ?> <br /> 
+  echo $HOWLONG_stirng; echo $VTNAME; echo $LOCATION; echo $RID?> <br /> 
 
 </p>
 
