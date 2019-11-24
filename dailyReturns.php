@@ -40,8 +40,8 @@
 
 <ul>
 <li><a href="index.html">Home</a></li>
-<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-<li><a href="reportGenerator.php">Clerks Action</a></li>
+<li><a href="all-listings.php">Browse All</a></li>
+<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
 </ul>
 
 </nav><!--/ #navigation-->
