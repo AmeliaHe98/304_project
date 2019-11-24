@@ -1,30 +1,40 @@
 <?php 
 session_start();
 include('DB.php');
+error_reporting(0);
+
 ?>
 
 
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	
-	<title>Car Rental | Home</title>
-	
-	<link rel="shortcut" href="images/favicon.ico" />
-	<link rel="stylesheet" href="css/style.css" media="screen" />
-	<link rel="stylesheet" href="css/skeleton.css" media="screen" />
-	<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
-	<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
 
-	<!-- HTML5 Shiv + detect touch events -->
-	<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Car Rental | Home</title>
+
+<link rel="shortcut" href="images/favicon.ico" />
+<link rel="stylesheet" href="css/style.css" media="screen" />
+<link rel="stylesheet" href="css/skeleton.css" media="screen" />
+<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
+<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+<link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<link href="css/slick.css" rel="stylesheet">
+<link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-<body>
+<body class="menu-1 h-style-1 text-1">
 
+<div class="wrap">
 
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
@@ -36,70 +46,49 @@ include('DB.php');
 			
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.html">Browse All</a></li>
+				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
 				<li><a href="sales-reps.html">Clerks Action</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
 		
 	</header><!--/ #header-->
+
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
 
 <!--Listing-Image-Slider-->
 
-<?php 
-$vlicense=$_GET['vlicense'];
-$sql = "SELECT * from Vehicle where Vehicle.VLICENSE=:vlicense";
-$query = $ConnectingDB -> prepare($sql);
-$query->bindParam(':vlicense',$vlicense, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{  
-  $_SESSION['brndid']=$result;  
-?>  
-
-
-<!--Listing-detail-->
-        <h2><?php echo htmlentities($result->MAKE);?> , <?php echo htmlentities($result->MODEL);?></h2>
-          <p>$<?php echo htmlentities($result->COLOR);?> </p>Car color:
-          <h5><?php echo htmlentities($result->YEAR);?></h5>
-          <h5><?php echo htmlentities($result->Features);?></h5>
-
-<?php }} ?>
-   
-
       
       <!--Side-Bar-->
-      <aside class="col-md-3">
+      <!-- <aside class="col-md-3"> -->
       
-        <div class="sidebar_widget">
-		<form action="makeReservation.php" method="get">
+        <!-- <div class="sidebar_widget"> -->
           <div class="widget_heading">
             <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
           </div>
-            <div class="form-group">
-              <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+		  <form action="makeReservation.php" method="get">
+			<div class="form-group">
+              <input type="hidden" class="form-control" name="vtname" value="<?php echo $_GET['vtname'];?>">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+              <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="fromtime" placeholder="From Time" required>
+              <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="totime" placeholder="To Time" required>
+              <input type="time" class="form-control" name="fromtime" placeholder="From Time" required>
             </div>
-			
-              <div class="form-group">
+            <div class="form-group">
+              <input type="time" class="form-control" name="totime" placeholder="To Time" required>
+			</div>
+
+         <div class="form-group">
                 <input type="submit" name="book" value="Book Now">
               </div>
-			  </form>
-            
+     </form>
+          </form>
         </div>
       </aside>
       <!--/Side-Bar--> 
