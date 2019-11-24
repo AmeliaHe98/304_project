@@ -15,10 +15,11 @@ if (isset($_POST["submit"])){
 // add the information into returns
 // SELECT THIS CAR THROUGH VLICENSE and then 
 $query_select = "SELECT * FROM Renatls 
-WHERE VLICENSE = '$Parameter'";
+WHERE VLICENSE = $Parameter";
 $stmt_select = $ConnectingDB->prepare($query_select);
 $stmt_select->execute();
 $DataRows_select = $stmt_select->fetch();
+if ($DataRows_select != FALSE) {
 $RID = $DataRows_select["RID"];
 $CONFNO= $DataRows_select["CONFNO"];
 
@@ -34,8 +35,15 @@ $Execute = $stmt_return->execute();
 if ($Execute) {
     echo 99;
 }
+}else{
+    echo "error";
+}
+
+
 // When returning a vehicle, the system will display a receipt with the necessary details 
 // (e.g., reservation confirmation number, date of return, how the total was calculated etc.) for the customer.
+echo $Parameter;
+echo $RID;
 echo $CONFNO ;
 echo $DATE_ID ;
 echo $TIMEID ;

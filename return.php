@@ -23,7 +23,7 @@ $stmt_updatecar->execute();
               <br>
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="returnReciept.php?id=<?php echo $_GET["id"];?>" method="send">
+              <form class="" action="returnReciept.php?id=<?php echo $_GET["id"];?>" method="post">
                 <div class="form-group">
                   <label for="DATE_ID"><span class="FieldInfo"><h4>DATE</h4></span></label>
                   <div class="input-group mb-3">
