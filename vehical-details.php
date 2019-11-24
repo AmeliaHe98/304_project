@@ -1,34 +1,6 @@
 <?php 
 session_start();
 include('DB.php');
-error_reporting(0);
-if(isset($_POST['submit']))
-{
-$fromdate=$_POST['fromdate'];
-$todate=$_POST['todate']; 
-$fromtime=$_POST['fromtime'];
-$totime=$_POST['totime']; 
-$vtname=$_GET['vtname'];
-$sql="INSERT INTO  Reservation(VTNAME,TOTIME,FROMDATE,TODATE, FROMTIME) VALUES(:vtname,:totime :fromdate,:todate,:fromtime,)";
-$query = $ConnectingDB->prepare($sql);
-$query->bindParam(':vtname',$vtname,PDO::PARAM_STR);
-$query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
-$query->bindParam(':todate',$todate,PDO::PARAM_STR);
-$query->bindParam(':fromtime',$fromtime,PDO::PARAM_STR);
-$query->bindParam(':totime',$totime,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $ConnectingDB->lastInsertId();
-if($lastInsertId)
-{
-echo "<script>alert('Booking successfull.');</script>";
-}
-else 
-{
-echo "<script>alert('Something went wrong. Please try again');</script>";
-}
-
-}
-
 ?>
 
 
@@ -106,10 +78,10 @@ foreach($results as $result)
       <aside class="col-md-3">
       
         <div class="sidebar_widget">
+		<form action="makeReservation.php" method="get">
           <div class="widget_heading">
             <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
           </div>
-          <form method="post">
             <div class="form-group">
               <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
             </div>
@@ -122,16 +94,12 @@ foreach($results as $result)
             <div class="form-group">
               <input type="text" class="form-control" name="totime" placeholder="To Time" required>
             </div>
-          <?php if($_SESSION['login'])
-              {?>
+			
               <div class="form-group">
-                <input type="submit" class="btn"  name="submit" value="Book Now">
+                <input type="submit" name="book" value="Book Now">
               </div>
-              <?php } else { ?>
-<a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
-
-              <?php } ?>
-          </form>
+			  </form>
+            
         </div>
       </aside>
       <!--/Side-Bar--> 

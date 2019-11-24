@@ -2,42 +2,41 @@
 // query code for making reservation
 require_once("DB.php");
 // include ('all-listings.php');
-
+// $vtname = $_POST["vtname"];
+// $fromDate = $_GET["fromdate"];
+// $fromTime = $_GET["fromtime"];
+// $toDate = $_GET["todate"];
+// $toTime = $_GET["totime"];    
 if (isset($_POST["submit"])) {
     // empty input
     if (empty($_POST["dlicense"])
     || empty($_POST["name"])) {
         echo "ERROR: HEY! You are entering an invaild customer! <br/>";
-    } else{
-      $address = $_POST["address"];
-      $vtname = $_POST["vtname"];
-      $fromDate = $_POST["fromDate"];
-      $fromTime = $_POST["fromTime"];
-      $toDate = $_POST["toDate"];
-      $toTime = $_POST["toTime"];        
+    } else{    
         // make reservation successfully
         $dlicense = $_POST["dlicense"];
         $name = $_POST["name"];
         global $ConnectingDB;
         // there is a customer registered
-        $query_select_customer = "SELECT * FROM Customer Where DLICENSE =  $dlicense";
+        $query_select_customer = "SELECT DISTINCT * FROM Customer Where DLICENSE =  $dlicense";
         $stmt_customer = $ConnectingDB -> query($query_select_customer);
-        $count = $stmt_customer -> rowCount();
         if ($count > 0) {
             $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-            Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
-                   // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
+            Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
+            // Values ($confirmationNum, $vtname, $dlicense, $fromDate, $fromTime, $toDate, $toTime)";
+                   
                         $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
                         $Execute = $stmt_reservation->execute();
                         if ($Execute) {
-                          echo "We have added you, let's start to make reservation !";
+                          echo "you have reserved this car!";
                         } else {
                           echo "insertion fail";
                         }
                       } else {
             // go to add Customer page
-            header("http://localhost:8080/304_project/makeReservation.php");
+            header("Location: http://localhost:8080/304_project/addCustomer.php");
+            exist();
           }
        
     }
@@ -91,7 +90,7 @@ if (isset($_POST["submit"])) {
               <br><br><br>  
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="makeReservation.php" method="post">
+              <form class="" action = "makeReservation.php" method="post">
                 <div class="form-group">
                   <label for="dlicense"><span class="FieldInfo"><h4>Driver License</h4></span></label>
                   <div class="input-group mb-3">
@@ -117,4 +116,6 @@ if (isset($_POST["submit"])) {
                 </div>
                 <br>
             </div>
+            </form>
+
 </div>
