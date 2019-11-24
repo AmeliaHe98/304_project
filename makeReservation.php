@@ -2,11 +2,11 @@
 // query code for making reservation
 require_once("DB.php");
 // include ('all-listings.php');
-// $vtname = $_POST["vtname"];
-// $fromDate = $_GET["fromdate"];
-// $fromTime = $_GET["fromtime"];
-// $toDate = $_GET["todate"];
-// $toTime = $_GET["totime"];    
+$vtname = $_GET["vtname"];
+$fromDate = $_GET["fromdate"];
+$fromTime = $_GET["fromtime"];
+$toDate = $_GET["todate"];
+$toTime = $_GET["totime"];    
 if (isset($_POST["submit"])) {
     // empty input
     if (empty($_POST["dlicense"])
@@ -19,18 +19,21 @@ if (isset($_POST["submit"])) {
         global $ConnectingDB;
         // there is a customer registered
         $query_select_customer = "SELECT DISTINCT * FROM Customer Where DLICENSE =  $dlicense";
-        $stmt_customer = $ConnectingDB -> query($query_select_customer);
+        $stmt_customer = $ConnectingDB -> prepare($query_select_customer);
+        $stmt_customer->execute();
+        $count = $stmt_customer->rowCount();
         if ($count > 0) {
-            $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
+            $confirmationNum = random_int(pow(10, 8), pow(10, 9) - 1);
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-            Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
-            // Values ($confirmationNum, $vtname, $dlicense, $fromDate, $fromTime, $toDate, $toTime)";
-                   
-                        $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
-                        $Execute = $stmt_reservation->execute();
-                        if ($Execute) {
+            Values ($confirmationNum, $vtname, $dlicense, NULL, NULL, NULL, NULL)";
+            // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
+            $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
+             $Execute = $stmt_reservation->execute();
+             if ($Execute) {
                           echo "you have reserved this car!";
                         } else {
+                          echo $fromTime;
+                          echo $toTime;
                           echo "insertion fail";
                         }
                       } else {
@@ -90,7 +93,7 @@ if (isset($_POST["submit"])) {
               <br><br><br>  
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="makeReservation.php" method="get">
+              <form class="" action = "" method="post">
                 <div class="form-group">
                   <label for="dlicense"><span class="FieldInfo"><h4>Driver License</h4></span></label>
                   <div class="input-group mb-3">
