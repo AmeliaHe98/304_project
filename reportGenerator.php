@@ -68,7 +68,7 @@
                     <a href="dailyReturns.php">Daily Returns
                     </p>
                     <p>
-                    <a href="all-return-reports.php.php">Daily Returns per Branch
+                    <a href="all-return-reports.php">Daily Returns per Branch
 					</p>
 </div><!--/ .toggle-container--> 
 </div>

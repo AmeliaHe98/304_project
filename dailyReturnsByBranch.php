@@ -49,34 +49,42 @@
 </header><!--/ #header-->
 
 <!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+<body>
+<?php 
+date_default_timezone_set('America/Vancouver');
+$current_date = date('d/m/Y');
+$Branch_City = $_GET['city'];
+$Branch_LOCATION_ID = $_GET['location_id'];
+?>
+
+<h2 class="page-title">Manage Returns</h2>
+<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+<div class="panel panel-default">
+<div class="panel-heading"><b>Daily Return of <?php echo $current_date ?> Location <?php echo $Branch_LOCATION_ID ?> Branch <?php echo $Branch_City ?> </b>
+<!-- - - - - - - - - - - - - - - BY CATEGORY - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY CATEGORY</caption>
+<th>Vehicle Type</th>
+<th>Revenue</th>
+<th>Count</th>
+</tr>
+</thead>
+
 <?php
-global $ConnectingDB;
-$current_date = date(y-m-d);
-$Branch_City = "";
-$Branch_LOCATION_ID = "";
-// display the number of vehicles returned per category
+// display the number of vehicles rented per category
 $query_bycategory = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
 WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City
 GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
 $stmt_bycategory->execute();
-?>
-<div>
-                 <table width="1000">
-                 <caption>BY CATEGORY in <?php $Branch_City + $Branch_LOCATION_ID?></caption>
-			<tr>
-				<th>Vehicle Type</th>
-                <th>Revenue</th>
-				<th>Count</th>
-            </tr>
-        
-<?php
 while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
     $VTNAME = $DataRows_bycategory["VTNAME"];
     $REVENUE = $DataRows_bycategory["REVENUE"];
     $COUNT_EACH_CATEGORY = $DataRows_bycategory["AMOUNT"];
-    ?>
-
+?>
     <tr>
     <td><?php echo $VTNAME; ?> </td>
     <td><?php echo $REVENUE; ?> </td>
@@ -86,26 +94,26 @@ while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
 
 </table>
 </div>
-<br><br><br>
+<!-- - - - - - - - - - - - - - - BY CATEGORY - - - - - - - - - - - - - - - - -->	
+<!-- - - - - - - - - - - - - - - BY BRANCH - - - - - - - - - - - - - - - - -->
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY BRANCH</caption>
+<th>Location</th>
+<th>City</th>
+<th>Revenue</th>
+<th>Count</th>
+</tr>
+</thead>
+
 
 <?php
-// display the number of vehicles returned at each branch
 $query_bybranch = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
 WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
 $stmt_bybranch->execute();
-?>
-<div>
-                 <table width="1000">
-                 <caption>BY BRANCH <?php $Branch_City + $Branch_LOCATION_ID?> </caption>
-			<tr>
-				<th>Location</th>
-                <th>City</th>
-                <th>Revenue</th>
-				<th>Count</th>
-            </tr>
-        
-<?php
 while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
     $LOCATION = $DataRows_bybranch["LOCATION_ID"];
     $CITY = $DataRows_bybranch["CITY"];
@@ -120,27 +128,27 @@ while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
     <td><?php echo $COUNT_EACH_BRANCH; ?> </td>
     </tr>
     <?php } ?>
-    </table>
-    </div>
-    <br><br><br>
 
-    
+</table>
+</div>		
+<!-- - - - - - - - - - - - - - - BY BRANCH - - - - - - - - - - - - - - - - -->	
+<!-- - - - - - - - - - - - - - - BY COMPANY - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>BY COMPANY</caption>
+<th>Revenue</th>
+<th>AMOUNT</th>
+</tr>
+</thead>
+
+
 <?php
-// display the number of new returns across the whole company
 $query_all = "SELECT SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar
 WHERE ReturnCar.DATE_ID = $current_date";
 $stmt_all = $ConnectingDB->prepare($query_all);
 $stmt_all->execute();
-?>
-<div>
-                 <table width="1000">
-                 <caption>COMPANY</caption>
-			<tr>
-            <th>Revenue</th>
-			<th>Count</th>
-            </tr>
-        
-<?php
 while ($DataRows_all = $stmt_all->fetch()) {
     $REVENUE = $DataRows_all["REVENUE"];
     $COUNT_ALL = $DataRows_all["AMOUNT"];
@@ -153,7 +161,11 @@ while ($DataRows_all = $stmt_all->fetch()) {
     <?php } ?>
 
 </table>
+</div>	
+<!-- - - - - - - - - - - - - - - BY COMPANY - - - - - - - - - - - - - - - - -->	
 </div>
+</div>
+    
 <!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
 <footer id="footer" class="container clearfix">

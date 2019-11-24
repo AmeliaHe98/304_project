@@ -46,8 +46,8 @@
 			
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
+				<li><a href="all-listings.php">Browse All</a></li>
+				<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
@@ -57,76 +57,21 @@
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
 <!--Listing-->
 <section class="listing-page">
-<div class="container">
-<div class="row">
-<div class="col-md-9 col-md-push-3">
-<div class="result-sorting-wrapper">
-<div class="sorting-count">
-<?php 
-//Query for Listing count
-$sql = "SELECT * from Vehicle";
-$query = $ConnectingDB -> prepare($sql);
-$query->bindParam(':VID',$VID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=$query->rowCount();
-?>
-<p><span><?php echo htmlentities($cnt);?> Listings</span></p>
-</div>
-</div>
 
-<?php $sql = "SELECT Vehicle.*,VehicleType.* from Vehicle, VehicleType where Vehicle.VTNAME=VehicleType.VTNAME";
-$query = $ConnectingDB -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{  ?>
-        <div class="product-listing-m gray-bg">
-          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a> 
-          </div>
-          <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5> 
-            <p class="list-price">$<?php echo htmlentities($result->DRATE);?> Per Day</p>
-            <ul>
-              <li><?php echo htmlentities($result->HRATE);?> Per Hour</li>
-              <li><?php echo htmlentities($result->KRATE);?> Per Kilomerter</li>
-              <li><?php echo htmlentities($result->FEATURES);?>Gas Type</li>
-            </ul>
-            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-          </div>
-        </div>
-      <?php }} ?>
-         </div>
       
 <!--Side-Bar-->
-<aside class="col-md-3 col-md-pull-9">
+<div class="container">
+<div class="row">
+<div class="col-md-9 col-md-push-0">
         <div class="sidebar_widget">
           <div class="widget_heading">
-            <h5></i> Find Your Car </h5>
+            <h5></i> Find Your Branch Report </h5>
           </div>
           <div class="sidebar_filter">
-            <form action="search-carresult.php" method="post">
-              <div class="form-group select">
-                <select class="form-control" name="vtname">
-				  <option>Select Vehicle Type</option>
-				  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
-				  $query = $ConnectingDB -> prepare($sql);
-				  $query->execute();
-				  $results=$query->fetchAll(PDO::FETCH_OBJ);
-				  $cnt=1;
-				  if($query->rowCount() > 0){
-					  foreach($results as $result)
-					  {       ?>  
-					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
-					  <?php }} ?>
-					</select>
-				</div>
+            <form action="dailyReturnsByBranch.php" method="get">
 				<div class="form-group select">
                 <select class="form-control" name="location_id">
-					<option>Select Location Type</option>
+					<option>Select Location</option>
 					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
 					$query = $ConnectingDB -> prepare($sql);
 					$query->execute();
@@ -139,9 +84,24 @@ foreach($results as $result)
 						<?php }} ?>
 					</select>
 				</div>
+				<div class="form-group select">
+                <select class="form-control" name="city">
+					<option>Select City</option>
+					<?php $sql = "SELECT distinct CITY FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->CITY);?>"><?php echo htmlentities($result->CITY);?></option>
+						<?php }} ?>
+					</select>
+				</div>
 			
 				<div class="form-group">
-					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search <b>Return</b> Report By Branch</button>
 				</div>
 			</form>
 		</div>
@@ -242,7 +202,6 @@ foreach($results as $result)
 
 			</div><!--/ .four .columns-->
 
-		</section><!--/ .container-->
 		
 	</footer><!--/ #footer-->
 	

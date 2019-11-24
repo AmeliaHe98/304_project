@@ -101,7 +101,7 @@
 				</div>
 			
 				<div class="form-group">
-					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Rent Report By Branch</button>
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search <b>Rent</b> Report By Branch</button>
 				</div>
 			</form>
 		</div>
