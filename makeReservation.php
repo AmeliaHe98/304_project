@@ -90,7 +90,7 @@ if (isset($_POST["submit"])) {
               <br><br><br>  
               </div>
               <div class="card-body bg-dark">
-              <form class="" action = "makeReservation.php" method="post">
+              <form class="" action="makeReservation.php" method="get">
                 <div class="form-group">
                   <label for="dlicense"><span class="FieldInfo"><h4>Driver License</h4></span></label>
                   <div class="input-group mb-3">

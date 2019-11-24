@@ -1,24 +1,33 @@
 <?php require_once("DB.php");?>
-<!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
-	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	
-	<title>Car Rental | Home</title>
-	
-	<link rel="shortcut" href="images/favicon.ico" />
-	<link rel="stylesheet" href="css/style.css" media="screen" />
-	<link rel="stylesheet" href="css/skeleton.css" media="screen" />
-	<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
-	<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
 
-	<!-- HTML5 Shiv + detect touch events -->
-	<script type="text/javascript" src="js/modernizr.custom.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Car Rental | Home</title>
+
+<link rel="shortcut" href="images/favicon.ico" />
+<link rel="stylesheet" href="css/style.css" media="screen" />
+<link rel="stylesheet" href="css/skeleton.css" media="screen" />
+<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
+<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+<link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<link href="css/slick.css" rel="stylesheet">
+<link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body class="menu-1 h-style-1 text-1">
+
+<div class="wrap">
 
 
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
@@ -30,8 +39,8 @@
 		<nav id="navigation" class="navigation">
 			
 			<ul>
-				<li class="current-menu-item"><a href="index.html">Home</a></li>
-				<li><a href="all-listings.php">Browse All</a></li>
+				<li><a href="index.html">Home</a></li>
+				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
 				<li><a href="sales-reps.html">Clerks Action</a></li>
 			</ul>
 			
@@ -43,11 +52,11 @@
 
 <!--Listing-->
 <section class="listing-page">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9 col-md-push-3">
-        <div class="result-sorting-wrapper">
-          <div class="sorting-count">
+<div class="container">
+<div class="row">
+<div class="col-md-9 col-md-push-3">
+<div class="result-sorting-wrapper">
+<div class="sorting-count">
 <?php 
 //Query for Listing count
 $LOCATION_ID=$_POST['location_id'];
@@ -78,27 +87,29 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {  ?>
         <div class="product-listing-m gray-bg">
+          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a> 
+          </div>
           <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vlicense=<?php echo htmlentities($result->VLICENSE);?>"></a></h5>
-            <p class="list-price"><?php echo htmlentities($result->ODOMETER);?> Miles Already Travelled</p>
+            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5> 
+            <p class="list-price">Vehicle Type:<?php echo htmlentities($result->VTNAME);?></p>
             <ul>
-              <li><?php echo htmlentities($result->COLOR);?> Color</li>
-              <li><?php echo htmlentities($result->YEAR);?> Year</li>
+              <li><?php echo htmlentities($result->LOCATION_ID);?></li>
+              <li><?php echo htmlentities($result->CITY);?></li>
             </ul>
-            <a href="vehical-details.php?vlicense=<?php echo htmlentities($result->VLICENSE);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>
          </div>
       
-     <!--Side-Bar-->
-     <aside class="col-md-3 col-md-pull-9">
+<!--Side-Bar-->
+<aside class="col-md-3 col-md-pull-9">
         <div class="sidebar_widget">
           <div class="widget_heading">
-            <h5><i class="fa fa-filter" aria-hidden="true"></i> Find Your Car </h5>
+            <h5></i> Find Your Car </h5>
           </div>
           <div class="sidebar_filter">
-            <form action="search-carresult.php" method="post">
+            <form action="search-carresult.php" method="get">
               <div class="form-group select">
                 <select class="form-control" name="vtname">
 				  <option>Select Vehicle Type</option>
@@ -129,6 +140,7 @@ foreach($results as $result)
 						<?php }} ?>
 					</select>
 				</div>
+			
 				<div class="form-group">
 					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
 				</div>
