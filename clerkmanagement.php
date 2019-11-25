@@ -9,14 +9,14 @@ require_once("DB.php");
         </head>
 	<body>
 		<div>
-        <form class="" action="clerkmanagement.php" method="POST">
+        <form class="" action="clerkmanagement.php" method="get">
 					<input type="text" name="Search" value="" placeholder="Search by vtname/ vlicense/ status" size = 100><br><br>
 					<input type="submit" name="SearchButton" value="Search record">
 				</form>
 		</div>
 
         <?php
-		if (isset($_POST["SearchButton"])) {
+		if (isset($_GET["SearchButton"])) {
         ?>
             <div>
                  <table width="1000">
@@ -39,15 +39,16 @@ require_once("DB.php");
 
             <?php
             global $ConnectingDB;
-            $Search = $_POST["Search"];
+            $Search = $_GET["Search"];
             if ($Search != null) {
+                echo $Search;
                 $query = "SELECT * FROM Vehicle 
-                      WHERE VTNAME = $Search OR VLICENSE = $Search OR STATUS = $Search";
+                      WHERE VTNAME = :search OR VLICENSE = :search OR STATUS = :search";
             }else{
                 $query = "SELECT * FROM Vehicle";
             }
-            
             $stmt = $ConnectingDB->prepare($query);
+            $stmt->bindValue(':search', $Search);
             $stmt->execute();
             while ($DataRows = $stmt->fetch()) {
                 $VID = $DataRows["VID"];
@@ -56,11 +57,12 @@ require_once("DB.php");
                 $MODEL = $DataRows["MODEL"];
                 $YEAR  = $DataRows["YEAR"];
                 $COLOR = $DataRows["COLOR"];
-                 $ODOMETER = $DataRows["ODOMETER"];
-                 $STATUS = $DataRows["STATUS"];
-                 $VTNAME = $DataRows["VTNAME"];
-                 $LOCATION = $DataRows["LOCATION_ID"];
-                 $CITY  = $DataRows["CITY"];
+                $ODOMETER = $DataRows["ODOMETER"];
+                $STATUS = $DataRows["STATUS"];
+                $VTNAME = $DataRows["VTNAME"];
+                $LOCATION = $DataRows["LOCATION_ID"];
+                $CITY  = $DataRows["CITY"];
+
                  ?>
             <tr>
             <td><?php echo $VID; ?></td>
