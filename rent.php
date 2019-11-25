@@ -55,8 +55,9 @@ $Parameter = $_GET["id"]; ?>
 // echo $parameter;
 // get cartype according to VLICENSE from car
 $query_selecttype = "SELECT * FROM Vehicle 
-                      WHERE VLICENSE = $Parameter";
+                      WHERE VLICENSE = :Parameter";
 $stmt_selecttype = $ConnectingDB->prepare($query_selecttype);
+$stmt_selecttype->bindValue(':Parameter', $Parameter);
 $stmt_selecttype->execute();
 $DataRows_selecttype = $stmt_selecttype->fetch();
 $VTNAME = $DataRows_selecttype["VTNAME"];
@@ -98,15 +99,25 @@ if ($count > 0) {
 
 // and then add to rentals
 $query_addrentals = "INSERT INTO Renatls (RID, VLICENSE, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME, ODOMETER, CONFNO) 
-                Values ($RID, $VLICENSE, $DLICENSE, $FROMDATE, $FROMTIME, $TODATE, $TOTIME $ODOMETER, $CONFNO)";
+                Values (:RID, :VLICENSE, :DLICENSE, :FROMDATE, :FROMTIME, :TODATE, :TOTIME, :ODOMETER, :CONFNO)";
             $stmt_addrentals = $ConnectingDB->prepare($query_addrentals);
+            $stmt_addrentals->bindValue(':RID', $RID);
+            $stmt_addrentals->bindValue(':VLICENSE', $VLICENSE);
+            $stmt_addrentals->bindValue(':DLICENSE', $DLICENSE);
+            $stmt_addrentals->bindValue(':FROMDATE', $FROMDATE);
+            $stmt_addrentals->bindValue(':FROMTIME', $FROMTIME);
+            $stmt_addrentals->bindValue(':TODATE', $TODATE);
+            $stmt_addrentals->bindValue(':TOTIME', $TOTIME);
+            $stmt_addrentals->bindValue(':ODOMETER', $ODOMETER);
+            $stmt_addrentals->bindValue(':CONFNO', $CONFNO);
             $Execute_a = $stmt_addrentals->execute();
-            // if ($Execute_a) {
-            //     echo 888;
-            // }
+            if ($Execute_a) {
+                echo "HELLO";
+            }
 // update the car status
-$query_updatestatus = "UPDATE Vehicle SET STATUS = 'rented' WHERE VLICENSE = $Parameter";
+$query_updatestatus = "UPDATE Vehicle SET STATUS = 'rented' WHERE VLICENSE = :Parameter";
 $stmt_updatestatus = $ConnectingDB->prepare($query_updatestatus);
+$stmt_updatestatus->bindValue(':Parameter', $Parameter);
 $Execute_b = $stmt_updatestatus->execute();
 // if ($Execute_b) {
 //     echo 88;
