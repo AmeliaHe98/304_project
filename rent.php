@@ -81,7 +81,13 @@ if ($count > 0) {
     }
     $RID = rand(pow(10, 4), pow(10, 5) - 1);
     $VLICENSE = $DataRows_selecttype["VLICENSE"];
-    $ODOMETER = $DataRows_selecttype["ODOMETER"];
+	$ODOMETER = $DataRows_selecttype["ODOMETER"];
+	$confo = $CONFNO;
+    $date1Timestamp = strtotime($TODATE);
+    $date2Timestamp = strtotime($FROMDATE);
+    $HOWLONG = ($date2Timestamp - $date1Timestamp) / (3600*24);
+    $HOWLONG_stirng = explode("-", "$HOWLONG")[1];
+    $LOCATION = $DataRows_selecttype["LOCATION_ID"];
 }else {
     echo $count;
     echo $VTNAME;
@@ -91,14 +97,17 @@ if ($count > 0) {
     $TOTIME = null;
     $CONFNO = 000000;
     $DLICENSE = 000000;
-    $RID = rand(pow(10, 4), pow(10, 5) - 1);
+	$RID = rand(pow(10, 4), pow(10, 5) - 1);
+	$confo = $CONFNO;
     $VLICENSE = $DataRows_selecttype["VLICENSE"];
-    $ODOMETER = $DataRows_selecttype["ODOMETER"];
+	$ODOMETER = $DataRows_selecttype["ODOMETER"];
+    $HOWLONG_stirng = 0;
+    $LOCATION = "guess where";
 }
 
 
 // and then add to rentals
-$query_addrentals = "INSERT INTO Renatls (RID, VLICENSE, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME, ODOMETER, CONFNO) 
+$query_addrentals = "INSERT INTO Rentals (RID, VLICENSE, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME, ODOMETER, CONFNO) 
                 Values (:RID, :VLICENSE, :DLICENSE, :FROMDATE, :FROMTIME, :TODATE, :TOTIME, :ODOMETER, :CONFNO)";
             $stmt_addrentals = $ConnectingDB->prepare($query_addrentals);
             $stmt_addrentals->bindValue(':RID', $RID);
@@ -111,17 +120,13 @@ $query_addrentals = "INSERT INTO Renatls (RID, VLICENSE, DLICENSE, FROMDATE, FRO
             $stmt_addrentals->bindValue(':ODOMETER', $ODOMETER);
             $stmt_addrentals->bindValue(':CONFNO', $CONFNO);
             $Execute_a = $stmt_addrentals->execute();
-            if ($Execute_a) {
-                echo "HELLO";
-            }
+            
 // update the car status
 $query_updatestatus = "UPDATE Vehicle SET STATUS = 'rented' WHERE VLICENSE = :Parameter";
 $stmt_updatestatus = $ConnectingDB->prepare($query_updatestatus);
 $stmt_updatestatus->bindValue(':Parameter', $Parameter);
 $Execute_b = $stmt_updatestatus->execute();
-// if ($Execute_b) {
-//     echo 88;
-// }
+
 // print confirmation number, date of reservation, type of car, location, how long the rental period lasts for etc
 ?>
 
@@ -130,14 +135,7 @@ $Execute_b = $stmt_updatestatus->execute();
         </head>
 <body>
 <p>
-    <?php 
-    $confo = strtotime($CONFNO);
-    $date1Timestamp = strtotime($TODATE);
-    $date2Timestamp = strtotime($FROMDATE);
-    $HOWLONG = ($date2Timestamp - $date1Timestamp) / (3600*24);
-    $HOWLONG_stirng = explode("-", "$HOWLONG")[1];
-    $LOCATION = $DataRows_selecttype["LOCATION_ID"];
-    ?>
+    
 <?php echo $DLICENSE; echo $FROMDATE; echo $confo;
 // echo $TODATE;
   echo $HOWLONG_stirng; echo $VTNAME; echo $LOCATION; echo $RID?> <br /> 
