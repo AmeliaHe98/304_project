@@ -81,7 +81,7 @@ $Parameter = $_GET["id"];
                     <div class="input-group-prepend">
                       <span class="input-group-text text-white bg-info"> <i class="fas fa-user"></i> </span>
                     </div>
-                    <input type="text" class="form-control" name="DATE_ID" id="cellphone_number" size = 100 style="height:30px; width: 500px" value="">
+                    <input type="date" class="form-control" name="DATE_ID" id="cellphone_number" size = 100 style="height:30px; width: 500px" value="">
                   </div>
                 </div>
                 <br>
@@ -91,7 +91,7 @@ $Parameter = $_GET["id"];
                     <div class="input-group-prepend">
                       <span class="input-group-text text-white bg-info"> <i class="fas fa-lock"></i> </span>
                     </div>
-                    <input type="text" class="form-control" name="TIMEID" size = 100 style="height:30px; width: 500px" id="name" value="">
+                    <input type="time" class="form-control" name="TIMEID" size = 100 style="height:30px; width: 500px" id="name" value="">
                   </div>
                 </div>
                 <br>
@@ -245,6 +245,3 @@ We provide insurance and equpiments with out cars
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
-
-
-

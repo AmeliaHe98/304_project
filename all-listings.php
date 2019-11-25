@@ -35,26 +35,26 @@
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-	
-	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
-	
+
+	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
+
 	<header id="header" class="clearfix">
-		
+
 		<a href="index.html" id="logo"><img src="images/logo.png" alt="Car Rental" /></a>
-	
+
 		<nav id="navigation" class="navigation">
-			
+
 			<ul>
 				<li><a href="index.html">Home</a></li>
 				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
+				<li><a href="sales-reps.html">Clerks Action</a></li>
 			</ul>
-			
+
 		</nav><!--/ #navigation-->
-		
+
 	</header><!--/ #header-->
-	
-	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
+
+	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->
 <!--Listing-->
 <section class="listing-page">
 <div class="container">
@@ -62,7 +62,7 @@
 <div class="col-md-9 col-md-push-3">
 <div class="result-sorting-wrapper">
 <div class="sorting-count">
-<?php 
+<?php
 //Query for Listing count
 $sql = "SELECT * from Vehicle";
 $query = $ConnectingDB -> prepare($sql);
@@ -85,22 +85,22 @@ if($query->rowCount() > 0)
 foreach($results as $result)
 {  ?>
         <div class="product-listing-m gray-bg">
-          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a> 
+          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a>
           </div>
           <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5> 
+            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5>
             <p class="list-price">$<?php echo htmlentities($result->DRATE);?> Per Day</p>
             <ul>
               <li><?php echo htmlentities($result->HRATE);?> Per Hour</li>
               <li><?php echo htmlentities($result->KRATE);?> Per Kilomerter</li>
               <li><?php echo htmlentities($result->FEATURES);?>Gas Type</li>
             </ul>
-            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">Reserve <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>
          </div>
-      
+
 <!--Side-Bar-->
 <aside class="col-md-3 col-md-pull-9">
         <div class="sidebar_widget">
@@ -108,7 +108,7 @@ foreach($results as $result)
             <h5></i> Find Your Car </h5>
           </div>
           <div class="sidebar_filter">
-            <form action="search-carresult.php" method="post">
+            <form action="search-carresult.php" method="get">
               <div class="form-group select">
                 <select class="form-control" name="vtname">
 				  <option>Select Vehicle Type</option>
@@ -119,7 +119,7 @@ foreach($results as $result)
 				  $cnt=1;
 				  if($query->rowCount() > 0){
 					  foreach($results as $result)
-					  {       ?>  
+					  {       ?>
 					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
 					  <?php }} ?>
 					</select>
@@ -134,12 +134,12 @@ foreach($results as $result)
 					$cnt=1;
 					if($query->rowCount() > 0){
 						foreach($results as $result)
-						{       ?>  
-						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+						{       ?>
+						<option location_id="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
 						<?php }} ?>
 					</select>
 				</div>
-			
+
 				<div class="form-group">
 					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
 				</div>
@@ -147,18 +147,18 @@ foreach($results as $result)
 		</div>
 	</div>
 </aside>
-      <!--/Side-Bar--> 
+      <!--/Side-Bar-->
     </div>
   </div>
 </section>
 
-	
-	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
-	
+
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->
+
 	<footer id="footer" class="container clearfix">
-		
+
 		<section class="container clearfix">
-			
+
 			<div class="four columns">
 
 				<div class="widget-container widget_text">
@@ -168,14 +168,14 @@ foreach($results as $result)
 					<div class="textwidget">
 
 						<p class="white">
-							We are a car rental company founded in 2019. 
-							We have a great selection of cars for our customers. 
+							We are a car rental company founded in 2019.
+							We have a great selection of cars for our customers.
 							We provide insurance and equpiments with out cars
 						</p>
 
 					</div><!--/ .textwidget-->
 
-				</div><!--/ .widget-container-->	
+				</div><!--/ .widget-container-->
 
 			</div><!--/ .four .columns-->
 
@@ -209,7 +209,7 @@ foreach($results as $result)
 
 				<div class="widget-container widget_contacts">
 
-					<h3 class="widget-title">Our Contacts</h3>			
+					<h3 class="widget-title">Our Contacts</h3>
 
 					<ul class="our-contacts">
 
@@ -243,11 +243,11 @@ foreach($results as $result)
 			</div><!--/ .four .columns-->
 
 		</section><!--/ .container-->
-		
+
 	</footer><!--/ #footer-->
-	
-	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-	
+
+	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->
+
 </div><!--/ .wrap-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
