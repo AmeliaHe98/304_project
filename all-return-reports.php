@@ -14,123 +14,64 @@
 <link rel="stylesheet" href="css/skeleton.css" media="screen" />
 <link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 <link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<!--Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<!--OWL Carousel slider-->
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<!--slick-slider -->
 <link href="css/slick.css" rel="stylesheet">
+<!--bootstrap-slider -->
 <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<!--FontAwesome Font Style -->
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<!-- HTML5 Shiv + detect touch events -->
 <script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-
-
-	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
-
+	
+	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
+	
 	<header id="header" class="clearfix">
-
+		
 		<a href="index.html" id="logo"><img src="images/logo.png" alt="Car Rental" /></a>
-
+	
 		<nav id="navigation" class="navigation">
-
+			
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
+				<li><a href="all-listings.php">Browse All</a></li>
+				<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
 			</ul>
-
+			
 		</nav><!--/ #navigation-->
-
+		
 	</header><!--/ #header-->
-
-	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->
-
+	
+	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
 <!--Listing-->
 <section class="listing-page">
+
+      
+<!--Side-Bar-->
 <div class="container">
 <div class="row">
-<div class="col-md-9 col-md-push-3">
-<div class="result-sorting-wrapper">
-<div class="sorting-count">
-<?php
-//Query for Listing count
-$LOCATION_ID=$_POST['location_id'];
-$VTNAME=$_POST['vtname'];
-$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=$query->rowCount();
-?>
-<p><span><?php echo htmlentities($cnt);?> Listings</span></p>
-</div>
-</div>
-
-<?php
-
-if ((empty ($_POST['vtname'])) and (! empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle where Vehicle.LOCATION_ID=:location_id";
-if ((! empty ($_POST['vtname'])) and ( empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle where Vehicle.VTNAME=:vtname";
-if ((! empty ($_POST['vtname'])) and (! empty($_POST['Locations']))) $sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-if ((empty ($_POST['vtname'])) and ( empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{  ?>
-        <div class="product-listing-m gray-bg">
-          <div class="product-listing-img"><img src="images/vehicleimages/<?php echo htmlentities($result->VTNAME);?>.jpg" class="img-responsive" alt="Image" /> </a>
-          </div>
-          <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>"></h5>
-            <p class="list-price">Vehicle Type:<?php echo htmlentities($result->VTNAME);?></p>
-            <ul>
-              <li><?php echo htmlentities($result->LOCATION_ID);?></li>
-              <li><?php echo htmlentities($result->CITY);?></li>
-            </ul>
-            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-          </div>
-        </div>
-      <?php }} ?>
-         </div>
-
-<!--Side-Bar-->
-<aside class="col-md-3 col-md-pull-9">
+<div class="col-md-9 col-md-push-0">
         <div class="sidebar_widget">
           <div class="widget_heading">
-            <h5></i> Find Your Car </h5>
+            <h5></i> Find Your Branch Report </h5>
           </div>
           <div class="sidebar_filter">
-            <form action="search-carresult.php" method="get">
-              <div class="form-group select">
-                <select class="form-control" name="vtname">
-				  <option>Select Vehicle Type</option>
-				  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
-				  $query = $ConnectingDB -> prepare($sql);
-				  $query->execute();
-				  $results=$query->fetchAll(PDO::FETCH_OBJ);
-				  $cnt=1;
-				  if($query->rowCount() > 0){
-					  foreach($results as $result)
-					  {       ?>
-					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
-					  <?php }} ?>
-					</select>
-				</div>
+            <form action="dailyReturnsByBranch.php" method="get">
 				<div class="form-group select">
                 <select class="form-control" name="location_id">
-					<option>Select Location Type</option>
+					<option>Select Location</option>
 					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
 					$query = $ConnectingDB -> prepare($sql);
 					$query->execute();
@@ -138,31 +79,46 @@ foreach($results as $result)
 					$cnt=1;
 					if($query->rowCount() > 0){
 						foreach($results as $result)
-						{       ?>
+						{       ?>  
 						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
 						<?php }} ?>
 					</select>
 				</div>
-
+				<div class="form-group select">
+                <select class="form-control" name="city">
+					<option>Select City</option>
+					<?php $sql = "SELECT distinct CITY FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->CITY);?>"><?php echo htmlentities($result->CITY);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+			
 				<div class="form-group">
-					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search <b>Return</b> Report By Branch</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </aside>
-      <!--/Side-Bar-->
+      <!--/Side-Bar--> 
     </div>
   </div>
 </section>
-<!-- /Listing-->
 
-<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->
-
-<footer id="footer" class="container clearfix">
-
+	
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+	<footer id="footer" class="container clearfix">
+		
 		<section class="container clearfix">
-
+			
 			<div class="four columns">
 
 				<div class="widget-container widget_text">
@@ -172,14 +128,14 @@ foreach($results as $result)
 					<div class="textwidget">
 
 						<p class="white">
-							We are a car rental company founded in 2019.
-							We have a great selection of cars for our customers.
+							We are a car rental company founded in 2019. 
+							We have a great selection of cars for our customers. 
 							We provide insurance and equpiments with out cars
 						</p>
 
 					</div><!--/ .textwidget-->
 
-				</div><!--/ .widget-container-->
+				</div><!--/ .widget-container-->	
 
 			</div><!--/ .four .columns-->
 
@@ -213,7 +169,7 @@ foreach($results as $result)
 
 				<div class="widget-container widget_contacts">
 
-					<h3 class="widget-title">Our Contacts</h3>
+					<h3 class="widget-title">Our Contacts</h3>			
 
 					<ul class="our-contacts">
 
@@ -246,20 +202,18 @@ foreach($results as $result)
 
 			</div><!--/ .four .columns-->
 
-		</section><!--/ .container-->
-
+		
 	</footer><!--/ #footer-->
-
-	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->
-  </div><!--/ .wrap-->
-
+	
+	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
+	
+</div><!--/ .wrap-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
 	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
-<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="js/jquery.gmap.min.js"></script>
 <script src="js/custom.js"></script>
