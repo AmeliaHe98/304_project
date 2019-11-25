@@ -130,21 +130,37 @@ $Execute_b = $stmt_updatestatus->execute();
 // print confirmation number, date of reservation, type of car, location, how long the rental period lasts for etc
 ?>
 
-<head>
-		<h1>Renting Receipt</h1>
-        </head>
-<body>
-<p>
+<!-- - - - - - - - - - - - - - - BY CATEGORY - - - - - - - - - - - - - - - - -->	
+<div class="panel-body">
+<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<thead>
+<tr>
+<caption>Renting Receipt</caption>
+<th>Confirmation number</th>
+<th>From date</th>
+<th>To date</th>
+<th>How Long String</th> 
+<th>Location</th> 
+<th>Vehicle Type</th> 
+<th>Reservation ID</th> 
+<th>Location</th> 
+</tr>
+</thead>
+
     
-<?php echo $DLICENSE; echo $FROMDATE; echo $confo;
-// echo $TODATE;
-  echo $HOWLONG_stirng; echo $VTNAME; echo $LOCATION; echo $RID?> <br /> 
+    <tr>
+    <td><?php echo $CONFNO; ?></td>
+    <td><?php echo $FROMDATE; ?></td>
+    <td><?php echo $TODATE; ?></td>
+    <td><?php echo $HOWLONG_stirng; ?></td>
+    <td><?php echo $LOCATION;?></td>
+    <td><?php echo $VTNAME;?></td>
+    <td><?php echo $RID;?></td>
+    <td><?php echo $LOCATION;?></td>
+    </tr>
 
-</p>
-
-</form>
-
-
+</table>
+</div>
 <!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
 <footer id="footer" class="container clearfix">
