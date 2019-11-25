@@ -41,7 +41,7 @@
 			<ul>
 				<li><a href="index.html">Home</a></li>
 				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
+				<li><a href="sales-reps.html">Clerks Action</a></li>
 			</ul>
 
 		</nav><!--/ #navigation-->
@@ -59,14 +59,37 @@
 <div class="sorting-count">
 <?php
 //Query for Listing count
-$LOCATION_ID=$_POST['location_id'];
-$VTNAME=$_POST['vtname'];
-$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
+$LOCATION_ID=$_GET["location_id"];
+$VTNAME=$_GET["vtname"];
+if($LOCATION_ID=='Select Location Type' && $VTNAME=='Select Vehicle Type'){
+	$query = $ConnectingDB -> prepare('SELECT * FROM Vehicle WHERE Vehicle.STATUS = "available"');
+	$query->execute();
+	$results=$query->fetchAll();
+}
+else if($LOCATION_ID=='Select Location Type' && $VTNAME!='Select Vehicle Type'){
+	//write a query
+	$query = $ConnectingDB -> prepare('SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.STATUS = "available"');
+	$query -> bindValue(':vtname',$VTNAME, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll();
+}
+else if($LOCATION_ID!='Select Location Type' && $VTNAME=='Select Vehicle Type'){
+	//write a query
+	$query = $ConnectingDB -> prepare('SELECT * from Vehicle where Vehicle.LOCATION_ID=:location_id and Vehicle.STATUS = "available"' );
+	$query -> bindValue(':location_id',$LOCATION_ID, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll();
+}
+else{
+	//wrtie a query when we have both location and vehicle type
+	$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id and Vehicle.STATUS = 'available' ";
+	$query = $ConnectingDB -> prepare($sql);
+	$query -> bindValue(':vtname',$VTNAME, PDO::PARAM_STR);
+	$query -> bindValue(':location_id',$LOCATION_ID, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll();
+}
+
 $cnt=$query->rowCount();
 ?>
 <p><span><?php echo htmlentities($cnt);?> Listings</span></p>
@@ -74,16 +97,36 @@ $cnt=$query->rowCount();
 </div>
 
 <?php
+if($LOCATION_ID=='Select Location Type' && $VTNAME=='Select Vehicle Type'){
+	$query = $ConnectingDB -> prepare('SELECT * FROM Vehicle where Vehicle.STATUS = "available"');
+	$query->execute();
+	$results=$query->fetchAll(PDO::FETCH_OBJ);
 
-if ((empty ($_POST['vtname'])) and (! empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle where Vehicle.LOCATION_ID=:location_id";
-if ((! empty ($_POST['vtname'])) and ( empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle where Vehicle.VTNAME=:vtname";
-if ((! empty ($_POST['vtname'])) and (! empty($_POST['Locations']))) $sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-if ((empty ($_POST['vtname'])) and ( empty($_POST['Locations']))) $sql = "SELECT * FROM Vehicle";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
+}
+else if($LOCATION_ID=='Select Location Type' && $VTNAME!='Select Vehicle Type'){
+	//write a query
+	$query = $ConnectingDB -> prepare('SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.STATUS = "available"');
+	$query -> bindValue(':vtname',$VTNAME, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll(PDO::FETCH_OBJ);
+}
+else if($LOCATION_ID!='Select Location Type' && $VTNAME=='Select Vehicle Type'){
+	//write a query
+	$query = $ConnectingDB -> prepare('SELECT * from Vehicle where Vehicle.LOCATION_ID=:location_id and Vehicle.STATUS = "available" ');
+	$query -> bindValue(':location_id',$LOCATION_ID, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll(PDO::FETCH_OBJ);
+}
+else{
+	//wrtie a query when we have both location and vehicle type
+	$sql = 'SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id and Vehicle.STATUS = "available"';
+	$query = $ConnectingDB -> prepare($sql);
+	$query -> bindValue(':vtname',$VTNAME, PDO::PARAM_STR);
+	$query -> bindValue(':location_id',$LOCATION_ID, PDO::PARAM_STR);
+	$query->execute();
+	$results=$query->fetchAll(PDO::FETCH_OBJ);
+}
+
 $cnt=1;
 if($query->rowCount() > 0)
 {
