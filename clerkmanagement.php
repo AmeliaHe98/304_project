@@ -85,13 +85,15 @@
             <?php
             global $ConnectingDB;
             $Search = $_POST["Search"];
-            $query = "SELECT * FROM Vehicle";
             if ($Search != null) {
                 $query = "SELECT * FROM Vehicle 
-                      WHERE VTNAME = '$Search' OR VLICENSE = $Search OR STATUS = '$Search'";
-            }
+                      WHERE VTNAME = :search OR VLICENSE = :search OR STATUS = :search";
+            }else {
+				$query = "SELECT * FROM Vehicle";
+			}
             
-            $stmt = $ConnectingDB->prepare($query);
+			$stmt = $ConnectingDB->prepare($query);
+			$stmt->bindValue(':search', $Search);
             $stmt->execute();
             while ($DataRows = $stmt->fetch()) {
                 $VID = $DataRows["VID"];
