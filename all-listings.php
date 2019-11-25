@@ -95,7 +95,7 @@ foreach($results as $result)
               <li><?php echo htmlentities($result->KRATE);?> Per Kilomerter</li>
               <li><?php echo htmlentities($result->FEATURES);?>Gas Type</li>
             </ul>
-            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <a href="vehical-details.php?vtname=<?php echo htmlentities($result->VTNAME);?>" class="btn">Reserve <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
       <?php }} ?>
