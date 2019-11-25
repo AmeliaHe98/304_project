@@ -31,9 +31,16 @@ if (isset($_POST["submit"])) {
             $date_2 = date('H:i:s', strtotime($toTime));
             // $formatted_toTime = $date_2->format('H:i:s');
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-            Values ($confirmationNum, '$vtname', $dlicense, $fromDate, '$date_1', $toDate, '$date_2')";
+            Values (:confirmationNum, :vtname, :dlicense, :fromDate, :date_1, :toDate, :date_2)";
             // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
             $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
+            $stmt_reservation->bindValue(':confirmationNum', $confirmationNum);
+            $stmt_reservation->bindValue(':vtname', $vtname);
+            $stmt_reservation->bindValue(':dlicense', $dlicense);
+            $stmt_reservation->bindValue(':fromDate', $fromDate);
+            $stmt_reservation->bindValue(':date_1', $date_1);
+            $stmt_reservation->bindValue(':toDate', $toDate);
+            $stmt_reservation->bindValue(':date_2', $date_2);
              $Execute = $stmt_reservation->execute();
              if ($Execute) {
                           echo "you have reserved this car!";
