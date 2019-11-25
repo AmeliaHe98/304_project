@@ -70,6 +70,9 @@
                     <p>
                     <a href="all-return-reports.php">Daily Returns per Branch
 					</p>
+					<p>
+                    <a href="clerkmanagement.php">Rent or Return Vehicle
+					</p>
 </div><!--/ .toggle-container--> 
 </div>
     
