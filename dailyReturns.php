@@ -52,7 +52,7 @@
 <body>
 <?php 
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y-m-d');
 ?>
 
 <h2 class="page-title">Manage Returns</h2>

@@ -53,7 +53,7 @@
 <body>
 <?php 
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y-m-d');
 ?>
 
 <h2 class="page-title">Manage Rentals</h2>
@@ -75,7 +75,7 @@ $current_date = date('d/m/Y');
 
 // display the number of vehicles rented at each branch
 $query_bycategory = "SELECT Vehicle.VTNAME, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
-WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = $current_date GROUP BY Vehicle.VTNAME";
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = date($current_date) GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
 $stmt_bycategory->execute();
 while ($DataRows_bycategory = $stmt_bycategory->fetch()) {

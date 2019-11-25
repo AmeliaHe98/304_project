@@ -52,7 +52,7 @@
 <?php
 global $ConnectingDB;
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y/m/d');
 $Branch_City = $_GET['city'];
 $Branch_LOCATION_ID = $_GET['location_id'];
 ?>
