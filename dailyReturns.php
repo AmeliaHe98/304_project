@@ -52,7 +52,7 @@
 <body>
 <?php 
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y-m-d');
 ?>
 
 <h2 class="page-title">Manage Returns</h2>
@@ -74,9 +74,10 @@ $current_date = date('d/m/Y');
 
 <?php
 $query_bycategory = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date 
+WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date 
 GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
+$stmt_bycategory->bindValue(':current_date', $current_date);
 $stmt_bycategory->execute();
 while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
     $VTNAME = $DataRows_bycategory["VTNAME"];
@@ -110,9 +111,10 @@ while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
 
 <?php
 $query_bybranch = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date 
+WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date 
 GROUP BY Vehicle.LOCATION_ID, Vehicle.CITY";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
+$stmt_bybranch->bindValue(':current_date', $current_date);
 $stmt_bybranch->execute();
 while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
     $LOCATION = $DataRows_bybranch["LOCATION_ID"];
@@ -147,8 +149,9 @@ while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
 
 <?php
 $query_all = "SELECT SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar
-WHERE ReturnCar.DATE_ID = $current_date";
+WHERE ReturnCar.DATE_ID = :current_date";
 $stmt_all = $ConnectingDB->prepare($query_all);
+$stmt_all->bindValue(':current_date', $current_date);
 $stmt_all->execute();
 while ($DataRows_all = $stmt_all->fetch()) {
     $REVENUE = $DataRows_all["REVENUE"];

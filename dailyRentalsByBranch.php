@@ -52,7 +52,7 @@
 <?php
 global $ConnectingDB;
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y-m-d');
 $Branch_City = $_GET['city'];
 $Branch_LOCATION_ID = $_GET['location_id'];
 ?>
@@ -76,9 +76,12 @@ $Branch_LOCATION_ID = $_GET['location_id'];
 <?php
 // display the number of vehicles rented per category
 $query_bycategory = "SELECT Vehicle.VTNAME, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
-WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = :current_date AND Vehicle.LOCATION_ID = :Branch_LOCATION_ID AND Vehicle.CITY = :Branch_City
 GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
+$stmt_bycategory->bindValue(':current_date', $current_date);
+$stmt_bycategory->bindValue(':Branch_LOCATION_ID', $Branch_LOCATION_ID);
+$stmt_bycategory->bindValue(':Branch_City', $Branch_City);
 $stmt_bycategory->execute();
 while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
 $VTNAME = $DataRows_bycategory["VTNAME"];
@@ -107,8 +110,11 @@ $COUNT_EACH_CATEGORY = $DataRows_bycategory["AMOUNT"];
 
 <?php
 $query_bybranch = "SELECT Vehicle.LOCATION_ID, Vehicle.CITY, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
-WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City";
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = :current_date AND Vehicle.LOCATION_ID = :Branch_LOCATION_ID AND Vehicle.CITY = :Branch_City";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
+$stmt_bybranch->bindValue(':current_date', $current_date);
+$stmt_bybranch->bindValue(':Branch_LOCATION_ID', $Branch_LOCATION_ID);
+$stmt_bybranch->bindValue(':Branch_City', $Branch_City);
 $stmt_bybranch->execute();
 while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
     $LOCATION = $DataRows_bybranch["LOCATION_ID"];
@@ -139,8 +145,9 @@ while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
 
 <?php
 $query_all = "SELECT COUNT(*) AS AMOUNT FROM Rentals 
-WHERE Rentals.FROMDATE = $current_date";
+WHERE Rentals.FROMDATE = :current_date";
 $stmt_all = $ConnectingDB->prepare($query_all);
+$stmt_all->bindValue(':current_date', $current_date);
 $stmt_all->execute();
 while ($DataRows_all = $stmt_all->fetch()) {
     $COUNT_ALL = $DataRows_all["AMOUNT"];

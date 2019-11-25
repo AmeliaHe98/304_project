@@ -52,7 +52,7 @@
 <body>
 <?php 
 date_default_timezone_set('America/Vancouver');
-$current_date = date('d/m/Y');
+$current_date = date('Y-m-d');
 $Branch_City = $_GET['city'];
 $Branch_LOCATION_ID = $_GET['location_id'];
 ?>
@@ -76,9 +76,12 @@ $Branch_LOCATION_ID = $_GET['location_id'];
 <?php
 // display the number of vehicles rented per category
 $query_bycategory = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City
+WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date AND Vehicle.LOCATION_ID = :Branch_LOCATION_ID AND Vehicle.CITY = :Branch_City
 GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
+$stmt_bycategory->bindValue(':current_date', $current_date);
+$stmt_bycategory->bindValue(':Branch_LOCATION_ID', $Branch_LOCATION_ID);
+$stmt_bycategory->bindValue(':Branch_City', $Branch_City);
 $stmt_bycategory->execute();
 while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
     $VTNAME = $DataRows_bycategory["VTNAME"];
@@ -111,8 +114,11 @@ while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
 
 <?php
 $query_bybranch = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = $current_date AND Vehicle.LOCATION_ID = $Branch_LOCATION_ID AND Vehicle.CITY = $Branch_City";
+WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date AND Vehicle.LOCATION_ID = :Branch_LOCATION_ID AND Vehicle.CITY = :Branch_City";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
+$stmt_bybranch->bindValue(':current_date', $current_date);
+$stmt_bybranch->bindValue(':Branch_LOCATION_ID', $Branch_LOCATION_ID);
+$stmt_bybranch->bindValue(':Branch_City', $Branch_City);
 $stmt_bybranch->execute();
 while ($DataRows_bybranch = $stmt_bybranch->fetch()) {
     $LOCATION = $DataRows_bybranch["LOCATION_ID"];
