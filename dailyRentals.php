@@ -75,7 +75,11 @@ $current_date = date('Y-m-d');
 
 // display the number of vehicles rented at each branch
 $query_bycategory = "SELECT Vehicle.VTNAME, COUNT(*) AS AMOUNT FROM Rentals, Vehicle 
+<<<<<<< HEAD
 WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = :current_date GROUP BY Vehicle.VTNAME";
+=======
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND Rentals.FROMDATE = date($current_date) GROUP BY Vehicle.VTNAME";
+>>>>>>> df2c63fbc4a8e4e22bae1a8931404aaf6291c347
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
 $stmt_bycategory->bindValue(':current_date', $current_date);
 $EXCUTE = $stmt_bycategory->execute();
