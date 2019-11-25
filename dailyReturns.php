@@ -73,8 +73,8 @@ $current_date = date('Y-m-d');
 
 
 <?php
-$query_bycategory = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date 
+$query_bycategory = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle, Rentals 
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date AND Rentals.RID = ReturnCar.RID
 GROUP BY Vehicle.VTNAME";
 $stmt_bycategory = $ConnectingDB->prepare($query_bycategory);
 $stmt_bycategory->bindValue(':current_date', $current_date);
@@ -110,8 +110,8 @@ while ($DataRows_bycategory = $stmt_bycategory->fetch()) {
 
 
 <?php
-$query_bybranch = "SELECT Vehicle.VTNAME, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle 
-WHERE ReturnCar.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date 
+$query_bybranch = "SELECT Vehicle.LOCATION_ID, Vehicle.CITY, SUM(ReturnCar.VALUE_ID) AS REVENUE, COUNT(*) AS AMOUNT FROM ReturnCar, Vehicle, Rentals
+WHERE Rentals.VLICENSE = Vehicle.VLICENSE AND ReturnCar.DATE_ID = :current_date AND Rentals.RID = ReturnCar.RID
 GROUP BY Vehicle.LOCATION_ID, Vehicle.CITY";
 $stmt_bybranch = $ConnectingDB->prepare($query_bybranch);
 $stmt_bybranch->bindValue(':current_date', $current_date);
