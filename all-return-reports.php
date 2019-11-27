@@ -1,12 +1,6 @@
-<?php 
-session_start();
-include('DB.php');
-error_reporting(0);
-?>
-
-
-<!DOCTYPE HTML>
-<html lang="en">
+<?php require_once("DB.php");?>
+<!DOCTYPE html>
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
 <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
 
@@ -20,21 +14,28 @@ error_reporting(0);
 <link rel="stylesheet" href="css/skeleton.css" media="screen" />
 <link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 <link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
+<!--Bootstrap -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<!--OWL Carousel slider-->
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+<!--slick-slider -->
 <link href="css/slick.css" rel="stylesheet">
+<!--bootstrap-slider -->
 <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+<!--FontAwesome Font Style -->
 <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
 <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+<!-- HTML5 Shiv + detect touch events -->
 <script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-
+	
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
 	<header id="header" class="clearfix">
@@ -45,63 +46,76 @@ error_reporting(0);
 			
 			<ul>
 				<li><a href="index.html">Home</a></li>
-				<li class="current-menu-item"><a href="all-listings.php">Browse All</a></li>
-				<li><a href="reportGenerator.php">Clerks Action</a></li>
+				<li><a href="all-listings.php">Browse All</a></li>
+				<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
 		
 	</header><!--/ #header-->
-
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
-
-<!--Listing-Image-Slider-->
+<!--Listing-->
+<section class="listing-page">
 
       
-      <!--Side-Bar-->
-      <!-- <aside class="col-md-3"> -->
-      
-        <!-- <div class="sidebar_widget"> -->
+<!--Side-Bar-->
+<div class="container">
+<div class="row">
+<div class="col-md-9 col-md-push-0">
+        <div class="sidebar_widget">
           <div class="widget_heading">
-            <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
+            <h5></i> Find Your Branch Report </h5>
           </div>
-		  <form action="makeReservation.php" method="get">
-			<div class="form-group">
-              <input type="hidden" class="form-control" name="vtname" value="<?php echo $_GET['vtname'];?>">
-            </div>
-            <div class="form-group">
-              <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
-            </div>
-            <div class="form-group">
-              <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
-            </div>
-            <div class="form-group">
-              <input type="time" class="form-control" name="fromtime" placeholder="From Time" required>
-            </div>
-            <div class="form-group">
-              <input type="time" class="form-control" name="totime" placeholder="To Time" required>
-			</div>
-
-         <div class="form-group">
-                <input type="submit" name="book" value="Book Now">
-              </div>
-     </form>
-          </form>
-        </div>
-      </aside>
+          <div class="sidebar_filter">
+            <form action="dailyReturnsByBranch.php" method="get">
+				<div class="form-group select">
+                <select class="form-control" name="location_id">
+					<option>Select Location</option>
+					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+				<div class="form-group select">
+                <select class="form-control" name="city">
+					<option>Select City</option>
+					<?php $sql = "SELECT distinct CITY FROM Vehicle";
+					$query = $ConnectingDB -> prepare($sql);
+					$query->execute();
+					$results=$query->fetchAll(PDO::FETCH_OBJ);
+					$cnt=1;
+					if($query->rowCount() > 0){
+						foreach($results as $result)
+						{       ?>  
+						<option value="<?php echo htmlentities($result->CITY);?>"><?php echo htmlentities($result->CITY);?></option>
+						<?php }} ?>
+					</select>
+				</div>
+			
+				<div class="form-group">
+					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search <b>Return</b> Report By Branch</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</aside>
       <!--/Side-Bar--> 
     </div>
-    
-    <div class="space-20"></div>
-    <div class="divider"></div>
-    
-    
   </div>
 </section>
-<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+
 	
-<footer id="footer" class="container clearfix">
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+	<footer id="footer" class="container clearfix">
 		
 		<section class="container clearfix">
 			
@@ -188,24 +202,21 @@ error_reporting(0);
 
 			</div><!--/ .four .columns-->
 
-		</section><!--/ .container-->
 		
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-  </div><!--/ .wrap-->
-
+	
+</div><!--/ .wrap-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
 	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
-<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="js/jquery.gmap.min.js"></script>
 <script src="js/custom.js"></script>
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>
-E

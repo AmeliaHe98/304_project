@@ -23,6 +23,8 @@ if (isset($_POST["submit"])){
         $Execute = $stmt->execute();
         if ($Execute) {
             echo "We have added you, let's start to make reservation !";
+            header("Location: http://localhost:8080/304_project/all-listings.php");
+            exist();
             // we can go back to the reservation page through this statement
             // Redirect_to("makeReservation.php");
         } else {

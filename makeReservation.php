@@ -2,42 +2,55 @@
 // query code for making reservation
 require_once("DB.php");
 // include ('all-listings.php');
-
+$vtname = $_GET["vtname"];
+$fromDate = $_GET["fromdate"];
+$fromTime = $_GET["fromtime"];
+$toDate = $_GET["todate"];
+$toTime = $_GET["totime"];    
 if (isset($_POST["submit"])) {
     // empty input
     if (empty($_POST["dlicense"])
     || empty($_POST["name"])) {
         echo "ERROR: HEY! You are entering an invaild customer! <br/>";
-    } else{
-      $address = $_POST["address"];
-      $vtname = $_POST["vtname"];
-      $fromDate = $_POST["fromDate"];
-      $fromTime = $_POST["fromTime"];
-      $toDate = $_POST["toDate"];
-      $toTime = $_POST["toTime"];        
+    } else{    
         // make reservation successfully
         $dlicense = $_POST["dlicense"];
         $name = $_POST["name"];
         global $ConnectingDB;
         // there is a customer registered
-        $query_select_customer = "SELECT * FROM Customer Where DLICENSE =  $dlicense";
-        $stmt_customer = $ConnectingDB -> query($query_select_customer);
-        $count = $stmt_customer -> rowCount();
+        $query_select_customer = "SELECT DISTINCT * FROM Customer Where DLICENSE =  $dlicense";
+        $stmt_customer = $ConnectingDB -> prepare($query_select_customer);
+        $stmt_customer->execute();
+        $count = $stmt_customer->rowCount();
         if ($count > 0) {
             $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
+            // $date_1 = date('H:i:s', strtotime("$fromTime"));
+            // $formatted_fromTime = $date_1->format('H:i:s');
+            $date_1 = date('H:i:s', strtotime($fromTime));
+            // $formatted = $date_1->format('H:i:s');
+            $date_2 = date('H:i:s', strtotime($toTime));
+            // $formatted_toTime = $date_2->format('H:i:s');
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
-            Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
-                   // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
-                        $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
-                        $Execute = $stmt_reservation->execute();
-                        if ($Execute) {
-                          echo "We have added you, let's start to make reservation !";
+            Values (:confirmationNum, :vtname, :dlicense, :fromDate, :date_1, :toDate, :date_2)";
+            // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
+            $stmt_reservation = $ConnectingDB -> prepare($query_insert_reservation);
+            $stmt_reservation->bindValue(':confirmationNum', $confirmationNum);
+            $stmt_reservation->bindValue(':vtname', $vtname);
+            $stmt_reservation->bindValue(':dlicense', $dlicense);
+            $stmt_reservation->bindValue(':fromDate', $fromDate);
+            $stmt_reservation->bindValue(':date_1', $date_1);
+            $stmt_reservation->bindValue(':toDate', $toDate);
+            $stmt_reservation->bindValue(':date_2', $date_2);
+             $Execute = $stmt_reservation->execute();
+             if ($Execute) {
+                          echo "you have reserved this car!";
                         } else {
                           echo "insertion fail";
                         }
                       } else {
             // go to add Customer page
-            header("http://localhost:8080/304_project/makeReservation.php");
+            header("Location: http://localhost:8080/304_project/addCustomer.php");
+            exist();
           }
        
     }
@@ -91,7 +104,7 @@ if (isset($_POST["submit"])) {
               <br><br><br>  
               </div>
               <div class="card-body bg-dark">
-              <form class="" action="makeReservation.php" method="post">
+              <form class="" action = "" method="post">
                 <div class="form-group">
                   <label for="dlicense"><span class="FieldInfo"><h4>Driver License</h4></span></label>
                   <div class="input-group mb-3">
@@ -117,4 +130,6 @@ if (isset($_POST["submit"])) {
                 </div>
                 <br>
             </div>
+            </form>
+
 </div>
