@@ -24,7 +24,13 @@ if (isset($_POST["submit"])) {
         $stmt_customer = $ConnectingDB -> query($query_select_customer);
         $count = $stmt_customer -> rowCount();
         if ($count > 0) {
-            $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
+            $confirmationNum = random_int(pow(10, 8), pow(10, 9) - 1);
+            // $date_1 = date('H:i:s', strtotime("$fromTime"));
+            // $formatted_fromTime = $date_1->format('H:i:s');
+            $date_1 = date('H:i:s', strtotime($fromTime));
+            // $formatted = $date_1->format('H:i:s');
+            $date_2 = date('H:i:s', strtotime($toTime));
+            // $formatted_toTime = $date_2->format('H:i:s');
             $query_insert_reservation = "INSERT INTO Reservation (CONFNO, VTNAME, DLICENSE, FROMDATE, FROMTIME, TODATE, TOTIME) 
             Values ($confirmationNum, $vtname, $dlicense, $address, $fromDate, $fromTime, $toDate, $toTime)";
                    // Values ($confirmationNum, NULL, $dlicense, NULL, NULL, NULL, NULL, NULL)";
