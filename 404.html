@@ -1,37 +1,21 @@
-<?php require_once("DB.php");?>
 <!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
+	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	
+	<title>Car Rental | Home</title>
+	
+	<link rel="shortcut" href="images/favicon.ico" />
+	<link rel="stylesheet" href="css/style.css" media="screen" />
+	<link rel="stylesheet" href="css/skeleton.css" media="screen" />
+	<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
+	<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
 
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
-<title>Car Rental | Home</title>
-
-<link rel="shortcut" href="images/favicon.ico" />
-<link rel="stylesheet" href="css/style.css" media="screen" />
-<link rel="stylesheet" href="css/skeleton.css" media="screen" />
-<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
-<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
-<!--Bootstrap -->
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<!--OWL Carousel slider-->
-<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-<link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
-<!--slick-slider -->
-<link href="css/slick.css" rel="stylesheet">
-<!--bootstrap-slider -->
-<link href="css/bootstrap-slider.min.css" rel="stylesheet">
-<!--FontAwesome Font Style -->
-<link href="assets/css/font-awesome.min.css" rel="stylesheet">
-
-<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-<!-- HTML5 Shiv + detect touch events -->
-<script type="text/javascript" src="js/modernizr.custom.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
+	<!-- HTML5 Shiv + detect touch events -->
+	<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
@@ -45,9 +29,32 @@
 		<nav id="navigation" class="navigation">
 			
 			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="all-listings.php">Browse All</a></li>
-				<li class="current-menu-item"><a href="reportGenerator.php">Clerks Action</a></li>
+				<li class="current-menu-item"><a href="index.html">Home</a></li>
+				<li><a href="all-listings.html">Browse All</a>
+					<ul>
+						<li><a href="all-listings.html">All Listings</a></li>
+						<li><a href="#">Manufacturer</a>
+							<ul>
+								<li><a href="one-products.html">Aston Martin</a></li>
+								<li><a href="one-products.html">Audi</a></li>
+								<li><a href="one-products.html">BMW</a></li>
+								<li><a href="one-products.html">Chevrolet</a></li>
+								<li><a href="one-products.html">Mercedes Benz</a></li>
+								<li><a href="one-products.html">Ferrari</a></li>
+								<li><a href="one-products.html">Lexus</a></li>
+								<li><a href="one-products.html">Porsche</a></li>
+								<li><a href="one-products.html">Toyota</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Body Type</a></li>
+						<li><a href="#">Engine Size</a></li>
+						<li><a href="#">Mileage</a></li>
+						<li><a href="#">Model Year</a></li>
+						<li><a href="#">Price Range</a></li>
+						<li><a href="#">Transmission</a></li>
+					</ul>
+				</li>
+				<li><a href="sales-reps.html">Sales Reps</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
@@ -55,62 +62,36 @@
 	</header><!--/ #header-->
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
-<!--Listing-->
-<section class="listing-page">
+	
+	
+	<div class="main">
 
-      
-<!--Side-Bar-->
-<div class="container">
-<div class="row">
-<div class="col-md-9 col-md-push-0">
-        <div class="sidebar_widget">
-          <div class="widget_heading">
-            <h5></i> Find Your Branch Report </h5>
-          </div>
-          <div class="sidebar_filter">
-            <form action="dailyRentalsByBranch.php" method="get">
-				<div class="form-group select">
-                <select class="form-control" name="location_id">
-					<option>Select Location</option>
-					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
-					$query = $ConnectingDB -> prepare($sql);
-					$query->execute();
-					$results=$query->fetchAll(PDO::FETCH_OBJ);
-					$cnt=1;
-					if($query->rowCount() > 0){
-						foreach($results as $result)
-						{       ?>  
-						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
-						<?php }} ?>
-					</select>
-				</div>
-				<div class="form-group select">
-                <select class="form-control" name="city">
-					<option>Select City</option>
-					<?php $sql = "SELECT distinct CITY FROM Vehicle";
-					$query = $ConnectingDB -> prepare($sql);
-					$query->execute();
-					$results=$query->fetchAll(PDO::FETCH_OBJ);
-					$cnt=1;
-					if($query->rowCount() > 0){
-						foreach($results as $result)
-						{       ?>  
-						<option value="<?php echo htmlentities($result->CITY);?>"><?php echo htmlentities($result->CITY);?></option>
-						<?php }} ?>
-					</select>
-				</div>
+		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+
+		<section class="container content clearfix">
 			
-				<div class="form-group">
-					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search <b>Rent</b> Report By Branch</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</aside>
-      <!--/Side-Bar--> 
-    </div>
-  </div>
-</section>
+			<div class="error404">
+				
+				<img src="images/mac.png" alt="" />
+				
+				<div class="e404">
+					
+					<h1>404</h1>
+					
+					<div class="title-error">Page Not Found</div>
+					
+					<p>Sorry, the page you requested may have been moved or deleted</p>
+					<a href="index.html" class="button orange">Get me back to homepage!</a>
+					
+				</div><!--/ .e404-->
+				
+			</div><!--/ .error404-->
+			
+		</section><!--/.container -->
+
+		<!-- - - - - - - - - - - - - end Container - - - - - - - - - - - - - - - - -->			
+		
+	</div><!--/ .main-->
 
 	
 	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
@@ -202,12 +183,41 @@
 
 			</div><!--/ .four .columns-->
 
+		</section><!--/ .container-->
 		
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-	
 </div><!--/ .wrap-->
+
+<div class="account-wrapper">
+	
+	<form class="form-reg" method="post" action="" />
+		
+		<a href="#" class="log">Login</a>
+		
+		<p>
+			<label>Username*</label>
+			<input class="input-medium" type="text" />
+		</p>
+		
+		<p>
+			<label>Password*</label>
+			<input class="input-medium" type="password" />
+		</p>
+		
+		<p class="forgot-pass">
+			<a href="#">Forgot your password?</a>
+		</p>
+		
+		<p>
+			<a href="#" class="button dark enter-btn">Login</a>
+			<a href="#" class="button dark enter-btn">Create an account</a>
+		</p>
+		
+	</form><!--/ .form-reg-->
+	
+</div><!--/ .account-wrapper-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>

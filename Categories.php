@@ -1,6 +1,4 @@
-<?php require_once("DB.php");?>
-<!DOCTYPE HTML>
-<html lang="en">
+<!DOCTYPE html>
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Open+Sans:400,600,700|Oswald|Electrolize' rel='stylesheet' type='text/css' />
@@ -18,9 +16,10 @@
 	<!-- HTML5 Shiv + detect touch events -->
 	<script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body>
+<body class="menu-1 h-style-1 text-1">
 
-
+<div class="wrap">
+	
 	<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->	
 	
 	<header id="header" class="clearfix">
@@ -31,8 +30,31 @@
 			
 			<ul>
 				<li class="current-menu-item"><a href="index.html">Home</a></li>
-				<li><a href="all-listings.php">Browse All</a></li>
-				<li><a href="sales-reps.html">Clerks Action</a></li>
+				<li><a href="all-listings.html">Browse By</a>
+					<ul>
+						<li><a href="all-listings.html">All Listings</a></li>
+						<li><a href="#">Manufacturer</a>
+							<ul>
+								<li><a href="one-products.html">Aston Martin</a></li>
+								<li><a href="one-products.html">Audi</a></li>
+								<li><a href="one-products.html">BMW</a></li>
+								<li><a href="one-products.html">Chevrolet</a></li>
+								<li><a href="one-products.html">Mercedes Benz</a></li>
+								<li><a href="one-products.html">Ferrari</a></li>
+								<li><a href="one-products.html">Lexus</a></li>
+								<li><a href="one-products.html">Porsche</a></li>
+								<li><a href="one-products.html">Toyota</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Body Type</a></li>
+						<li><a href="#">Engine Size</a></li>
+						<li><a href="#">Mileage</a></li>
+						<li><a href="#">Model Year</a></li>
+						<li><a href="#">Price Range</a></li>
+						<li><a href="#">Transmission</a></li>
+					</ul>
+				</li>
+				<li><a href="sales-reps.html">Sales Reps</a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->
@@ -40,111 +62,88 @@
 	</header><!--/ #header-->
 	
 	<!-- - - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - - -->	
-
-<!--Listing-->
-<section class="listing-page">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9 col-md-push-3">
-        <div class="result-sorting-wrapper">
-          <div class="sorting-count">
-<?php 
-//Query for Listing count
-$LOCATION_ID=$_POST['location_id'];
-$VTNAME=$_POST['vtname'];
-$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=$query->rowCount();
-?>
-<p><span><?php echo htmlentities($cnt);?> Listings</span></p>
-</div>
-</div>
-
-<?php 
-
-$sql = "SELECT * from Vehicle where Vehicle.VTNAME=:vtname and Vehicle.LOCATION_ID=:location_id";
-$query = $ConnectingDB -> prepare($sql);
-$query -> bindParam(':vtname',$VTNAME, PDO::PARAM_STR);
-$query -> bindParam(':location_id',$LOCATION_ID, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{  ?>
-        <div class="product-listing-m gray-bg">
-          <div class="product-listing-content">
-            <h5><a href="vehical-details.php?vlicense=<?php echo htmlentities($result->VLICENSE);?>"></a></h5>
-            <p class="list-price"><?php echo htmlentities($result->ODOMETER);?> Miles Already Travelled</p>
-            <ul>
-              <li><?php echo htmlentities($result->COLOR);?> Color</li>
-              <li><?php echo htmlentities($result->YEAR);?> Year</li>
-            </ul>
-            <a href="vehical-details.php?vlicense=<?php echo htmlentities($result->VLICENSE);?>" class="btn">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-          </div>
-        </div>
-      <?php }} ?>
-         </div>
-      
-     <!--Side-Bar-->
-     <aside class="col-md-3 col-md-pull-9">
-        <div class="sidebar_widget">
-          <div class="widget_heading">
-            <h5><i class="fa fa-filter" aria-hidden="true"></i> Find Your Car </h5>
-          </div>
-          <div class="sidebar_filter">
-            <form action="search-carresult.php" method="post">
-              <div class="form-group select">
-                <select class="form-control" name="vtname">
-				  <option>Select Vehicle Type</option>
-				  <?php $sql = "SELECT distinct VTNAME FROM Vehicle";
-				  $query = $ConnectingDB -> prepare($sql);
-				  $query->execute();
-				  $results=$query->fetchAll(PDO::FETCH_OBJ);
-				  $cnt=1;
-				  if($query->rowCount() > 0){
-					  foreach($results as $result)
-					  {       ?>  
-					  <option value="<?php echo htmlentities($result->VTNAME);?>"><?php echo htmlentities($result->VTNAME);?></option>
-					  <?php }} ?>
-					</select>
-				</div>
-				<div class="form-group select">
-                <select class="form-control" name="location_id">
-					<option>Select Location Type</option>
-					<?php $sql = "SELECT distinct LOCATION_ID FROM Vehicle";
-					$query = $ConnectingDB -> prepare($sql);
-					$query->execute();
-					$results=$query->fetchAll(PDO::FETCH_OBJ);
-					$cnt=1;
-					if($query->rowCount() > 0){
-						foreach($results as $result)
-						{       ?>  
-						<option value="<?php echo htmlentities($result->LOCATION_ID);?>"><?php echo htmlentities($result->LOCATION_ID);?></option>
-						<?php }} ?>
-					</select>
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i> Search Car</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</aside>
-      <!--/Side-Bar--> 
-    </div>
-  </div>
-</section>
-<!-- /Listing--> 
-
-<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
 	
-<footer id="footer" class="container clearfix">
+	
+	<div class="main">
+
+		<!-- - - - - - - - - - - - - - - Container - - - - - - - - - - - - - - - - -->	
+
+		<section class="container sbl clearfix">
+
+			<!-- - - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+			<section class="container py-2 mb-4">		
+				<div class="row" style="min-height:50px; background:red;"> </div>
+			</section>
+
+			<!-- - - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - - -->	
+
+
+			<!-- - - - - - - - - - - - - - - Sidebar - - - - - - - - - - - - - - - - -->	
+
+			<aside id="sidebar" class="four columns">
+				
+				
+				<div class="widget-container widget_custom_search">
+
+					<h3 class="widget-title">Quick Search</h3>
+
+					<form action="/" id="boxpanel" class="form-panel" />
+
+						<fieldset>
+							<label for="manufacturer">Start date:</label>
+							<select id="manufacturer" name="manufacturer">
+								<option value="0" />Any
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
+							</select>
+						</fieldset>
+
+						<fieldset>
+							<label for="minprice">End date:</label>
+							<select id="minprice" name="minprice">
+								<option value="0" />No min
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
+							</select>
+						</fieldset>
+
+						<fieldset>
+							<label for="maxprice">Start time:</label>
+							<select id="maxprice" name="maxprice">
+								<option value="0" />No max
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
+							</select>
+						</fieldset>
+
+						<fieldset>
+							<label for="trans">End time:</label>
+							<select id="trans" name="trans">
+								<option value="0" />Any
+								<option value="1" />Lorem
+								<option value="2" />Ipsum
+							</select>
+						</fieldset>
+
+						<div class="clear"></div>
+						<button id="submitSearch" class="submit-search" type="submit">Search</button>
+
+					</form><!--/ .form-panel-->
+
+			</aside><!--/ #sidebar-->
+
+			<!-- - - - - - - - - - - - - end Sidebar - - - - - - - - - - - - - - - - -->
+
+		</section><!--/.container -->
+
+		<!-- - - - - - - - - - - - - end Container - - - - - - - - - - - - - - - - -->			
+		
+	</div><!--/ .main-->
+
+	
+	<!-- - - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->	
+	
+	<footer id="footer" class="container clearfix">
 		
 		<section class="container clearfix">
 			
@@ -236,15 +235,43 @@ foreach($results as $result)
 	</footer><!--/ #footer-->
 	
 	<!-- - - - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - - -->		
-  </div><!--/ .wrap-->
+	
+</div><!--/ .wrap-->
 
+<div class="account-wrapper">
+	
+	<form class="form-reg" method="post" action="" />
+		
+		<a href="#" class="log">Login</a>
+		
+		<p>
+			<label>Username*</label>
+			<input class="input-medium" type="text" />
+		</p>
+		
+		<p>
+			<label>Password*</label>
+			<input class="input-medium" type="password" />
+		</p>
+		
+		<p class="forgot-pass">
+			<a href="#">Forgot your password?</a>
+		</p>
+		
+		<p>
+			<a href="#" class="button dark enter-btn">Login</a>
+			<a href="#" class="button dark enter-btn">Create an account</a>
+		</p>
+		
+	</form><!--/ .form-reg-->
+	
+</div><!--/ .account-wrapper-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
 <!--[if lt IE 9]>
 	<script src="js/selectivizr-and-extra-selectors.min.js"></script>
 <![endif]-->
-<script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="js/jquery.gmap.min.js"></script>
 <script src="js/custom.js"></script>
