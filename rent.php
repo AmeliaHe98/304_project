@@ -139,7 +139,7 @@ $Execute_b = $stmt_updatestatus->execute();
 <th>Confirmation number</th>
 <th>From date</th>
 <th>To date</th>
-<th>How Long String</th> 
+<th>How Long</th> 
 <th>Location</th> 
 <th>Vehicle Type</th> 
 <th>Reservation ID</th> 
