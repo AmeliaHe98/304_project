@@ -23,7 +23,7 @@ if (isset($_POST["submit"])) {
         $stmt_customer->execute();
         $count = $stmt_customer->rowCount();
         if ($count > 0) {
-            $confirmationNum = random_compat(pow(10, 8), pow(10, 9) - 1);
+            $confirmationNum = rand(pow(10, 8), pow(10, 9) - 1);
             // $date_1 = date('H:i:s', strtotime("$fromTime"));
             // $formatted_fromTime = $date_1->format('H:i:s');
             $date_1 = date('H:i:s', strtotime($fromTime));
